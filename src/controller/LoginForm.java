@@ -26,7 +26,8 @@ public class LoginForm implements Initializable {
     private TextField passwordField;
     @FXML
     private Button loginBtn;
-    @FXML Button cancelBtn;
+    @FXML
+    private Button cancelBtn;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle){
