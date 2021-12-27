@@ -16,7 +16,7 @@
       <TextField fx:id="idField" layoutX="71.0" layoutY="85.0" />
       <PasswordField fx:id="passwordField" layoutX="71.0" layoutY="121.0" />
       <Label fx:id="zoneIdLabel" layoutX="14.0" layoutY="55.0" text="User's Zone" textFill="#8a8888" />
-      <Button fx:id="loginBtn" layoutX="71.0" layoutY="155.0" mnemonicParsing="false" text="Login" />
+      <Button fx:id="loginBtn" layoutX="71.0" layoutY="155.0" mnemonicParsing="false" onAction="#loginValidate" text="Login" />
       <Button fx:id="cancelBtn" layoutX="139.0" layoutY="155.0" mnemonicParsing="false" onAction="#handleCancelButtonAction" text="Cancel" />
    </children>
 </AnchorPane>

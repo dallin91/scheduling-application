@@ -8,7 +8,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
+import java.time.ZoneId;
 import java.util.ResourceBundle;
 
 public class LoginForm implements Initializable {
@@ -31,10 +34,30 @@ public class LoginForm implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle){
+        zoneAndLanguage();
     }
 
     public void handleCancelButtonAction(ActionEvent event) {
         Stage stage = (Stage) cancelBtn.getScene().getWindow();
         stage.close();
+    }
+
+    public void loginValidate(ActionEvent event) throws IOException, SQLException {
+        String user = idField.getText();
+        String password = passwordField.getText();
+        if (user.equals("test") && password.equals("test")) {
+            //transition to new scene
+            System.out.println("Yippee it worked!");
+        }
+        else {
+            //add an error message
+            System.out.println("Imposter detected. Prepare to be annihilated");
+        }
+    }
+
+    public void zoneAndLanguage() {
+        ZoneId userZone = ZoneId.systemDefault();
+        zoneIdLabel.setText("Current Location: " + userZone);
+        System.out.println(userZone);
     }
 }
