@@ -19,7 +19,7 @@ public class SchedulingPage implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle){
-
+        System.out.println("Yippee it worked!");
     }
 
     public void toAddCustomer(ActionEvent actionEvent) throws IOException {

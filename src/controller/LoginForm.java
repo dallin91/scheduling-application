@@ -50,7 +50,7 @@ public class LoginForm implements Initializable {
         String password = passwordField.getText();
         if (user.equals("test") && password.equals("test")) {
             //transition to new scene
-            System.out.println("Yippee it worked!");
+
             Parent root = FXMLLoader.load(getClass().getResource("/view/SchedulingPage.fxml"));
             Stage stage = (Stage) ((Button)event.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);
