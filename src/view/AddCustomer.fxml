@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Label layoutX="161.0" layoutY="14.0" text="Add Customer Information">
          <font>
@@ -19,5 +19,7 @@
       <TextField fx:id="addressField" layoutX="161.0" layoutY="94.0" />
       <TextField fx:id="zipCode" layoutX="161.0" layoutY="123.0" />
       <TextField fx:id="phoneNumber" layoutX="161.0" layoutY="153.0" />
+      <Button layoutX="414.0" layoutY="361.0" mnemonicParsing="false" text="Save" />
+      <Button layoutX="477.0" layoutY="361.0" mnemonicParsing="false" text="Cancel" />
    </children>
 </AnchorPane>
