@@ -12,20 +12,21 @@ public class DBConnection {
     private static final String vendorName = ":mysql:";
     private static final String ipAddress = "//wgudb.ucertify.com:3306/";
     //add dbName later
-    private static final String dbName = "";
+    private static final String dbName = "client_schedule";
 
     private static final String jdbcURL = protocol + vendorName + ipAddress + dbName;
 
     private static final String MYSQLJBCDriver = "com.mysql.jdbc.Driver";
 
     //add username later
-    private static final String username = "";
+    private static final String username = "sqlUser";
+    private static final String password = "Passw0rd!";
     private static Connection conn = null;
 
     public static Connection startConnection() {
         try {
             Class.forName(MYSQLJBCDriver);
-            conn = DriverManager.getConnection(jdbcURL, username, Password.getPassword());
+            conn = DriverManager.getConnection(jdbcURL, username, password);
 
             System.out.println("Connection successful");
         } catch (SQLException | ClassNotFoundException e) {
