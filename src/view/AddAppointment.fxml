@@ -40,6 +40,6 @@
       <TextField layoutX="394.0" layoutY="238.0" />
       <TextField layoutX="394.0" layoutY="267.0" />
       <Button layoutX="328.0" layoutY="350.0" mnemonicParsing="false" text="Save" />
-      <Button layoutX="407.0" layoutY="350.0" mnemonicParsing="false" text="Cancel" />
+      <Button fx:id="cancelBtn" layoutX="407.0" layoutY="350.0" mnemonicParsing="false" onAction="#toSchedulingCancel" text="Cancel" />
    </children>
 </AnchorPane>
