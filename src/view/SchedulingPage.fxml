@@ -53,5 +53,8 @@
             <TableColumn fx:id="apptUserID" prefWidth="75.0" text="User ID" />
         </columns>
       </TableView>
+      <Button fx:id="deleteApptBtn" layoutX="675.0" layoutY="573.0" mnemonicParsing="false" text="Delete" />
+      <Button fx:id="addApptBtn" layoutX="623.0" layoutY="573.0" mnemonicParsing="false" text="Add" />
+      <Button fx:id="updateApptBtn" layoutX="560.0" layoutY="573.0" mnemonicParsing="false" text="Update" />
    </children>
 </AnchorPane>
