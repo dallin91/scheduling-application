@@ -56,5 +56,6 @@
       <Button fx:id="deleteApptBtn" layoutX="675.0" layoutY="573.0" mnemonicParsing="false" text="Delete" />
       <Button fx:id="addApptBtn" layoutX="623.0" layoutY="573.0" mnemonicParsing="false" onAction="#toAddAppointment" text="Add" />
       <Button fx:id="updateApptBtn" layoutX="560.0" layoutY="573.0" mnemonicParsing="false" text="Update" />
+      <RadioButton layoutX="642.0" layoutY="326.0" mnemonicParsing="false" text="Week" />
    </children>
 </AnchorPane>
