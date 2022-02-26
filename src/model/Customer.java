@@ -12,21 +12,17 @@ public class Customer {
 
     private String phoneNumber;
 
-    private String country;
-
-    private String customerArea;
+    public int divisionID;
 
 
     //constructor
-    public Customer(int id, String name, String address, String zipCode, String phoneNumber, String country,
-                    String customerArea) {
+    public Customer(int id, String name, String address, String zipCode, String phoneNumber, int divisionID) {
         this.id = id;
         this.name = name;
         this.address = address;
         this.zipCode = zipCode;
         this.phoneNumber = phoneNumber;
-        this.country = country;
-        this.customerArea = customerArea;
+        this.divisionID = divisionID;
     }
 
     //get id
@@ -73,19 +69,11 @@ public class Customer {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getCountry() {
-        return country;
+    public int getDivisionID() {
+        return divisionID;
     }
 
-    public void setCountry(String country) {
-        this.country = country;
-    }
-
-    public String getCustomerArea() {
-        return customerArea;
-    }
-
-    public void setCustomerArea(String customerArea) {
-        this.customerArea = customerArea;
+    public void setDivisionID(int divisionID) {
+        this.divisionID = divisionID;
     }
 }
