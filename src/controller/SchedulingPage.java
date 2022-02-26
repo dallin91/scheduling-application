@@ -33,9 +33,7 @@ public class SchedulingPage implements Initializable {
     @FXML
     private TableColumn<Customer, String> custZip;
     @FXML
-    private TableColumn<Customer, String> custCity;
-    @FXML
-    private TableColumn<Customer, String> custCountry;
+    private TableColumn<Customer, Integer> custFirstLevelDivision;
     @FXML
     private TableColumn<Customer, String> custPhone;
 
@@ -48,8 +46,7 @@ public class SchedulingPage implements Initializable {
         custName.setCellValueFactory(new PropertyValueFactory<>("name"));
         custAddress.setCellValueFactory(new PropertyValueFactory<>("address"));
         custZip.setCellValueFactory(new PropertyValueFactory<>("zipCode"));
-        custCity.setCellValueFactory(new PropertyValueFactory<>("customerArea"));
-        custCountry.setCellValueFactory(new PropertyValueFactory<>("country"));
+        custFirstLevelDivision.setCellValueFactory(new PropertyValueFactory<>("divisionID"));
         custPhone.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
     }
 
