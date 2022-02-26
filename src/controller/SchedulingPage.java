@@ -1,6 +1,8 @@
 package controller;
 
 import javafx.beans.property.Property;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,6 +14,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import model.Country;
 import model.Customer;
 
 import java.io.IOException;
@@ -19,7 +22,7 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-public class SchedulingPage implements Initializable {
+public class SchedulingPage {
     @FXML
     private Button addCustBtn;
     @FXML
@@ -37,8 +40,8 @@ public class SchedulingPage implements Initializable {
     @FXML
     private TableColumn<Customer, String> custPhone;
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+
+    public void initialize() throws SQLException {
         System.out.println("Yippee it worked!");
 
         //update customerArea and country with divisionID
@@ -48,6 +51,15 @@ public class SchedulingPage implements Initializable {
         custZip.setCellValueFactory(new PropertyValueFactory<>("zipCode"));
         custFirstLevelDivision.setCellValueFactory(new PropertyValueFactory<>("divisionID"));
         custPhone.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
+
+        //add country info here later
+
+        populateCustomerTableView();
+    }
+
+    public void populateCustomerTableView() throws SQLException {
+        ObservableList<Customer> customerObservableList = Customer.getCustomerObservableList();
+        customerTable.setItems(customerObservableList);
     }
 
     public void toAddCustomer(ActionEvent actionEvent) throws IOException {
