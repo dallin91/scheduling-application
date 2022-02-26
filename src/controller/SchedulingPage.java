@@ -1,5 +1,6 @@
 package controller;
 
+import Database.DBCustomers;
 import javafx.beans.property.Property;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -44,6 +45,8 @@ public class SchedulingPage {
     public void initialize() throws SQLException {
         System.out.println("Yippee it worked!");
 
+        populateCustomerTableView();
+
         //update customerArea and country with divisionID
         custID.setCellValueFactory(new PropertyValueFactory<>("id"));
         custName.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -54,11 +57,10 @@ public class SchedulingPage {
 
         //add country info here later
 
-        populateCustomerTableView();
     }
 
     public void populateCustomerTableView() throws SQLException {
-        ObservableList<Customer> customerObservableList = Customer.getCustomerObservableList();
+        ObservableList<Customer> customerObservableList = DBCustomers.getCustomerObservableList();
         customerTable.setItems(customerObservableList);
     }
 
