@@ -10,7 +10,7 @@ import java.sql.SQLException;
 
 public class Customer {
 
-    private static ObservableList<Customer> customerObservableList = FXCollections.observableArrayList();
+
 
     private int id;
 
@@ -88,6 +88,7 @@ public class Customer {
     }
 
     public static ObservableList<Customer> getCustomerObservableList() throws SQLException {
+        ObservableList<Customer> customerObservableList = FXCollections.observableArrayList();
         String sql = "SELECT * from customers";
         PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
         ResultSet rs = ps.executeQuery();
