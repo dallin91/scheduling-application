@@ -56,7 +56,7 @@ public class SchedulingPage {
     }
 
     public void populateCustomerTableView() throws SQLException {
-        ObservableList<Customer> customerList = DBCustomers.getCustomerObservableList();
+        ObservableList<Customer> customerList = DBCustomers.getAllCustomers();
         customerTable.setItems(customerList);
     }
 
