@@ -16,7 +16,7 @@ public class DBConnection {
 
     private static final String jdbcURL = protocol + vendorName + ipAddress + dbName;
 
-    private static final String MYSQLJBCDriver = "com.mysql.jdbc.Driver";
+    private static final String MYSQLJBCDriver = "com.mysql.cj.jdbc.Driver";
 
     //add username later
     private static final String username = "sqlUser";
@@ -24,6 +24,7 @@ public class DBConnection {
     private static Connection conn = null;
 
     public static Connection startConnection() {
+        System.out.println("Connecting...");
         try {
             Class.forName(MYSQLJBCDriver);
             conn = DriverManager.getConnection(jdbcURL, username, password);
