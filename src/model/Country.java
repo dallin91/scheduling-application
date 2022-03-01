@@ -34,17 +34,5 @@ public class Country {
         this.countryName = countryName;
     }
 
-    public static ObservableList<Country> getAllCountries() throws SQLException {
-        ObservableList<Country> countryObservableList = FXCollections.observableArrayList();
-        String sql = "SELECT * FROM countries";
-        PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
-        ResultSet rs = ps.executeQuery();
-        while(rs.next()) {
-            int countryID = rs.getInt("Country_ID");
-            String countryName = rs.getString("Country");
-            Country country = new Country(countryID, countryName);
-            countryObservableList.add(country);
-        }
-        return countryObservableList;
-    }
+
 }
