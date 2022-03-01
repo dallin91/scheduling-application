@@ -43,9 +43,11 @@ public class SchedulingPage {
 
 
     public void initialize() throws SQLException {
-        System.out.println("Yippee it worked!");
+
 
         populateCustomerTableView();
+
+        System.out.println("Yippee it worked!");
 
         //update customerArea and country with divisionID
         custID.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -60,8 +62,8 @@ public class SchedulingPage {
     }
 
     public void populateCustomerTableView() throws SQLException {
-        ObservableList<Customer> customerObservableList = DBCustomers.getCustomerObservableList();
-        customerTable.setItems(customerObservableList);
+        ObservableList<Customer> customerList = DBCustomers.getCustomerObservableList();
+        customerTable.setItems(customerList);
     }
 
     public void toAddCustomer(ActionEvent actionEvent) throws IOException {
