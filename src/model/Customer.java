@@ -46,12 +46,12 @@ public class Customer {
     }
 
     //get name
-    public String name() {
+    public String getName() {
         return name;
     }
 
     //set name
-    public void name(String name) {
+    public void setName(String name) {
         this.name = name;
     }
 
