@@ -43,18 +43,16 @@
       </Label>
       <TableView fx:id="appointmentTable" layoutX="14.0" layoutY="361.0" prefHeight="200.0" prefWidth="713.0">
         <columns>
-          <TableColumn fx:id="apptID" prefWidth="75.0" text="Appt ID" />
-          <TableColumn fx:id="apptTitle" prefWidth="36.0" text="Title" />
+          <TableColumn fx:id="apptID" prefWidth="67.0" text="Appt ID" />
+          <TableColumn fx:id="apptTitle" prefWidth="44.0" text="Title" />
             <TableColumn fx:id="apptDesc" prefWidth="75.0" text="Description" />
-            <TableColumn fx:id="apptLoc" prefWidth="51.0" text="Location" />
-            <TableColumn fx:id="apptContact" prefWidth="53.0" text="Contact" />
-            <TableColumn fx:id="apptType" prefWidth="43.0" text="Type" />
-            <TableColumn fx:id="apptStartDate" prefWidth="65.0" text="Start Date" />
-            <TableColumn fx:id="apptStartTime" prefWidth="68.0" text="Start Time" />
-            <TableColumn fx:id="apptEndDate" prefWidth="59.0" text="End Date" />
-            <TableColumn fx:id="apptEndTime" prefWidth="60.0" text="End Time" />
+            <TableColumn fx:id="apptLoc" prefWidth="69.0" text="Location" />
+            <TableColumn fx:id="apptContact" prefWidth="68.0" text="Contact ID" />
+            <TableColumn fx:id="apptType" prefWidth="46.0" text="Type" />
+            <TableColumn fx:id="apptStartTime" prefWidth="121.0" text="Start Time" />
+            <TableColumn fx:id="apptEndTime" prefWidth="113.0" text="End Time" />
             <TableColumn fx:id="apptCustID" prefWidth="51.0" text="Cust ID" />
-            <TableColumn fx:id="apptUserID" prefWidth="75.0" text="User ID" />
+            <TableColumn fx:id="apptUserID" prefWidth="58.0" text="User ID" />
         </columns>
       </TableView>
       <Button fx:id="deleteApptBtn" layoutX="675.0" layoutY="573.0" mnemonicParsing="false" text="Delete" />
