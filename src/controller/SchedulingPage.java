@@ -38,7 +38,7 @@ public class SchedulingPage {
 
     public void initialize() throws SQLException {
 
-
+/*
         populateCustomerTableView();
 
         System.out.println("Yippee it worked!");
@@ -52,7 +52,8 @@ public class SchedulingPage {
         custPhone.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
 
         //add country info here later
-
+*/
+        //try to replicate pulling data from database from webinar
     }
 
     public void populateCustomerTableView() throws SQLException {
