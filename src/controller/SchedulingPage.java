@@ -38,22 +38,22 @@ public class SchedulingPage {
 
     public void initialize() throws SQLException {
 
-/*
+
         populateCustomerTableView();
 
         System.out.println("Yippee it worked!");
 
         //update customerArea and country with divisionID
         custID.setCellValueFactory(new PropertyValueFactory<>("id"));
-        custName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        custName.setCellValueFactory(new PropertyValueFactory<Customer, String>("name"));
         custAddress.setCellValueFactory(new PropertyValueFactory<>("address"));
         custZip.setCellValueFactory(new PropertyValueFactory<>("zipCode"));
         custFirstLevelDivision.setCellValueFactory(new PropertyValueFactory<>("divisionID"));
         custPhone.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
 
         //add country info here later
-*/
-        //try to replicate pulling data from database from webinar
+
+
     }
 
     public void populateCustomerTableView() throws SQLException {
