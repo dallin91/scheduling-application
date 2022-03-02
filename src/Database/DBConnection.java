@@ -10,8 +10,8 @@ public class DBConnection {
 
     private static final String protocol = "jdbc";
     private static final String vendorName = ":mysql:";
-    private static final String ipAddress = "//wgudb.ucertify.com:3306/";
-    //add dbName later
+    private static final String ipAddress = "//DESKTOP-BT4131D:3306/";
+    //add dbName later DESKTOP-BT4131D
     private static final String dbName = "client_schedule";
 
     private static final String jdbcURL = protocol + vendorName + ipAddress + dbName;
