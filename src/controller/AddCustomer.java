@@ -1,5 +1,9 @@
 package controller;
 
+import DBAccess.DBCountries;
+import DBAccess.DBFirstLevelDivision;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -7,14 +11,18 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import model.Country;
+import model.FirstLevelDivision;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-public class AddCustomer implements Initializable {
+public class AddCustomer {
     @FXML
     private TextField custName;
     @FXML
@@ -23,10 +31,41 @@ public class AddCustomer implements Initializable {
     private TextField zipCode;
     @FXML
     private TextField phoneNumber;
+    @FXML
+    private ComboBox<String> custState;
+    @FXML
+    private ComboBox<String> custCountry;
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle){
 
+    public void initialize() throws SQLException{
+
+        setCustCountry();
+        setCustState();
+
+    }
+
+    public void setCustCountry() throws SQLException {
+
+        ObservableList<Country> countryList = DBCountries.getAllCountries();
+        ObservableList<String> countryNames = FXCollections.observableArrayList();
+
+        for (Country c : countryList) {
+            countryNames.add(c.getCountryName());
+        }
+
+        custCountry.setItems(countryNames);
+    }
+
+    public void setCustState() throws SQLException {
+
+        ObservableList<FirstLevelDivision> divisionList = DBFirstLevelDivision.getFirstLevelDivisions();
+        ObservableList<String> divisionNames = FXCollections.observableArrayList();
+
+        for (FirstLevelDivision d : divisionList) {
+            divisionNames.add(d.getDivisionName());
+        }
+
+        custState.setItems(divisionNames);
     }
 
     public void toSchedulingCancel(ActionEvent actionEvent) throws IOException {
