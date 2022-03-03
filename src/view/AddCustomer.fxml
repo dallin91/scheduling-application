@@ -22,7 +22,7 @@
       <TextField fx:id="addressField" layoutX="161.0" layoutY="94.0" />
       <TextField fx:id="zipCode" layoutX="161.0" layoutY="123.0" />
       <TextField fx:id="phoneNumber" layoutX="161.0" layoutY="153.0" />
-      <Button layoutX="414.0" layoutY="361.0" mnemonicParsing="false" text="Save" />
+      <Button layoutX="414.0" layoutY="361.0" mnemonicParsing="false" onAction="#toSchedulingSave" text="Save" />
       <Button layoutX="477.0" layoutY="361.0" mnemonicParsing="false" onAction="#toSchedulingCancel" text="Cancel" />
       <Label layoutX="367.0" layoutY="68.0" text="ID" />
       <TextField editable="false" layoutX="403.0" layoutY="64.0" />

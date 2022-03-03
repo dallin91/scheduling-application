@@ -44,6 +44,36 @@ public class AddCustomer {
 
     }
 
+    public void toSchedulingSave(ActionEvent actionEvent) throws IOException, SQLException {
+        System.out.println("Ya still gotta do this part you doofus");
+
+        addCustomer();
+
+        Parent root = FXMLLoader.load(getClass().getResource("/view/SchedulingPage.fxml"));
+        Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setTitle("Scheduling Page");
+        stage.setScene(scene);
+        stage.show();
+
+    }
+
+    public void addCustomer() throws SQLException {
+
+        try {
+            if (!custName.getText().equals("") && !addressField.getText().equals("") && !zipCode.getText().equals("")
+            && !phoneNumber.getText().equals("") && !custState.getValue().equals("") &&
+                    !custCountry.getValue().equals("")) {
+                System.out.println("Can add customer");
+            }
+            else {
+                System.out.println("Not gonna work");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public void setCustCountry() throws SQLException {
 
         ObservableList<Country> countryList = DBCountries.getAllCountries();
