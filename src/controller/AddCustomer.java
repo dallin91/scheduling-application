@@ -2,6 +2,8 @@ package controller;
 
 import DBAccess.DBCountries;
 import DBAccess.DBFirstLevelDivision;
+import Database.DBConnection;
+import Database.DBUtility;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -19,7 +21,10 @@ import model.FirstLevelDivision;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 
 public class AddCustomer {
@@ -65,6 +70,42 @@ public class AddCustomer {
             && !phoneNumber.getText().equals("") && !custState.getValue().equals("") &&
                     !custCountry.getValue().equals("")) {
                 System.out.println("Can add customer");
+
+                String newName = custName.getText();
+                String newAddress = addressField.getText();
+                String newZip = zipCode.getText();
+                String newPhone = phoneNumber.getText();
+
+                int newDivision = 0;
+                String selectedDivision = custState.getSelectionModel().getSelectedItem();
+                ObservableList<FirstLevelDivision> allDivisions = DBFirstLevelDivision.getFirstLevelDivisions();
+                for (FirstLevelDivision d : allDivisions) {
+                    if (selectedDivision.equals(d.getDivisionName())) {
+                        newDivision = d.getDivisionID();
+                    }
+                }
+
+                LocalDateTime newDateToAdd = LocalDateTime.now();
+                String newCreatedBy = "admin";
+                Timestamp newLastUpdate = Timestamp.valueOf(LocalDateTime.now());
+                String newLastUpdatedBy = "admin";
+
+                String sqlStatement = "INSERT INTO customers (Customer_Name, Address, Postal_Code, Phone, " +
+                        "Create_Date, Created_By, Last_Update, Last_Updated_By, Division_ID) " +
+                        "VALUES (?,?,?,?,?,?,?,?,?)";
+
+                DBUtility.setPreparedStatement(DBConnection.getConnection(), sqlStatement);
+                PreparedStatement ps = DBUtility.getPreparedStatement();
+                ps.setString(1, newName);
+                ps.setString(2, newAddress);
+                ps.setString(3, newZip);
+                ps.setString(4, newPhone);
+                ps.setTimestamp(5, Timestamp.valueOf(newDateToAdd));
+                ps.setString(6, newCreatedBy);
+                ps.setTimestamp(7, newLastUpdate);
+                ps.setString(8, newLastUpdatedBy);
+                ps.setInt(9, newDivision);
+                ps.execute();
             }
             else {
                 System.out.println("Not gonna work");
