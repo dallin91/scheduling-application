@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -59,6 +60,7 @@ public class SchedulingPage {
     private TableColumn<Appointment, Integer> apptCustID;
     @FXML
     private TableColumn<Appointment, Integer> apptUserID;
+    private static Customer customerToUpdate;
 
 
     public void initialize() throws SQLException {
@@ -99,6 +101,29 @@ public class SchedulingPage {
     public void populateAppointmentTableView() throws SQLException {
         ObservableList<Appointment> appointmentList = DBAppointments.getAllAppointments();
         appointmentTable.setItems(appointmentList);
+    }
+
+    public void toUpdateCustomer(ActionEvent actionEvent) throws IOException {
+        customerToUpdate = customerTable.getSelectionModel().getSelectedItem();
+
+        if (customerToUpdate != null) {
+            Parent root = FXMLLoader.load(getClass().getResource("/view/UpdateCustomer.fxml"));
+            Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setTitle("Update Customer");
+            stage.setScene(scene);
+            stage.show();
+        }
+        else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("No Customer Selected");
+            alert.setContentText("No customer selected to update. Please select a customer.");
+            alert.showAndWait();
+        }
+    }
+
+    public static Customer getCustomerToUpdate() {
+        return customerToUpdate;
     }
 
     public void toAddCustomer(ActionEvent actionEvent) throws IOException {
