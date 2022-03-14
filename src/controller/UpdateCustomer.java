@@ -1,5 +1,6 @@
 package controller;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -10,7 +11,6 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import model.Customer;
 
-import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.sql.SQLException;
 
@@ -48,7 +48,12 @@ public class UpdateCustomer {
 
     }
 
-    public void toSchedulingCancel() {
-
+    public void toSchedulingCancel(ActionEvent actionEvent) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/view/SchedulingPage.fxml"));
+        Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setTitle("Scheduling Page");
+        stage.setScene(scene);
+        stage.show();
     }
 }
