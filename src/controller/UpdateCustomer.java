@@ -44,7 +44,21 @@ public class UpdateCustomer {
         //custState.setSelectionModel(String.valueOf(chosenCustomer.getDivisionID()));
     }
 
-    public void toSchedulingSave() {
+    public void updateCustomer() throws SQLException {
+
+    }
+
+    public void toSchedulingSave(ActionEvent actionEvent) throws IOException, SQLException {
+        System.out.println("Ya still gotta do this part you doofus");
+
+        updateCustomer();
+
+        Parent root = FXMLLoader.load(getClass().getResource("/view/SchedulingPage.fxml"));
+        Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setTitle("Scheduling Page");
+        stage.setScene(scene);
+        stage.show();
 
     }
 
