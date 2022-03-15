@@ -2,6 +2,8 @@ package controller;
 
 import DBAccess.DBCountries;
 import DBAccess.DBFirstLevelDivision;
+import Database.DBConnection;
+import Database.DBUtility;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -19,7 +21,10 @@ import model.Customer;
 import model.FirstLevelDivision;
 
 import java.io.IOException;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 public class UpdateCustomer {
     @FXML
@@ -74,6 +79,51 @@ public class UpdateCustomer {
 
     public void updateCustomer() throws SQLException {
 
+        try {
+            if (!custName.getText().equals("") && !addressField.getText().equals("") && !zipCode.getText().equals("")
+                    && !phoneNumber.getText().equals("") && !custState.getValue().equals("") &&
+                    !custCountry.getValue().equals("")) {
+                System.out.println("Can add customer");
+
+                String newID = custID.getText();
+                String newName = custName.getText();
+                String newAddress = addressField.getText();
+                String newZip = zipCode.getText();
+                String newPhone = phoneNumber.getText();
+
+                int newDivision = 0;
+                String selectedDivision = custState.getSelectionModel().getSelectedItem();
+                ObservableList<FirstLevelDivision> allDivisions = DBFirstLevelDivision.getFirstLevelDivisions();
+                for (FirstLevelDivision d : allDivisions) {
+                    if (selectedDivision.equals(d.getDivisionName())) {
+                        newDivision = d.getDivisionID();
+                    }
+                }
+
+                Timestamp newLastUpdate = Timestamp.valueOf(LocalDateTime.now());
+                String newLastUpdatedBy = "admin";
+
+                String sqlStatement = "UPDATE customers SET Customer_ID = ?, Customer_Name = ?, Address = ?, Postal_Code = ?," +
+                        "Phone = ?, Last_Update = ?, Last_Updated_By = ?, Division_ID = ? WHERE Customer_ID = ?";
+
+                DBUtility.setPreparedStatement(DBConnection.getConnection(), sqlStatement);
+                PreparedStatement ps = DBUtility.getPreparedStatement();
+                ps.setString(1, newID);
+                ps.setString(2, newName);
+                ps.setString(3, newAddress);
+                ps.setString(4, newZip);
+                ps.setString(5, newPhone);
+                ps.setTimestamp(6, newLastUpdate);
+                ps.setString(7, newLastUpdatedBy);
+                ps.setInt(8, newDivision);
+                ps.setString(9, newID);
+                ps.execute();
+            } else {
+                System.out.println("Not going to work");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void toSchedulingSave(ActionEvent actionEvent) throws IOException, SQLException {
