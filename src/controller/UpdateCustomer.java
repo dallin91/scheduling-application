@@ -1,5 +1,9 @@
 package controller;
 
+import DBAccess.DBCountries;
+import DBAccess.DBFirstLevelDivision;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -7,9 +11,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.SingleSelectionModel;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import model.Country;
 import model.Customer;
+import model.FirstLevelDivision;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -32,6 +39,9 @@ public class UpdateCustomer {
 
     public void initialize() throws SQLException {
 
+        setCustCountry();
+        setCustState();
+
         Customer chosenCustomer = SchedulingPage.getCustomerToUpdate();
 
         custID.setText(String.valueOf(chosenCustomer.getId()));
@@ -40,8 +50,26 @@ public class UpdateCustomer {
         zipCode.setText(String.valueOf(chosenCustomer.getZipCode()));
         phoneNumber.setText(String.valueOf(chosenCustomer.getPhoneNumber()));
 
+        //populate combo boxes
         int divID = chosenCustomer.getDivisionID();
-        //custState.setSelectionModel(String.valueOf(chosenCustomer.getDivisionID()));
+        String state = null;
+        String country = null;
+        int countryID = 0;
+        ObservableList<Country> allCountries = DBCountries.getAllCountries();
+        ObservableList<FirstLevelDivision> allDivisions = DBFirstLevelDivision.getFirstLevelDivisions();
+        for (FirstLevelDivision d : allDivisions) {
+            if (d.getDivisionID() == divID) {
+                state = d.getDivisionName();
+                countryID = d.getCountryID();
+            }
+        }
+        for (Country c : allCountries) {
+            if (c.getCountryID() == countryID) {
+                country = c.getCountryName();
+            }
+        }
+        custCountry.setValue(country);
+        custState.setValue(state);
     }
 
     public void updateCustomer() throws SQLException {
@@ -69,5 +97,29 @@ public class UpdateCustomer {
         stage.setTitle("Scheduling Page");
         stage.setScene(scene);
         stage.show();
+    }
+
+    public void setCustCountry() throws SQLException {
+
+        ObservableList<Country> countryList = DBCountries.getAllCountries();
+        ObservableList<String> countryNames = FXCollections.observableArrayList();
+
+        for (Country c : countryList) {
+            countryNames.add(c.getCountryName());
+        }
+
+        custCountry.setItems(countryNames);
+    }
+
+    public void setCustState() throws SQLException {
+
+        ObservableList<FirstLevelDivision> divisionList = DBFirstLevelDivision.getFirstLevelDivisions();
+        ObservableList<String> divisionNames = FXCollections.observableArrayList();
+
+        for (FirstLevelDivision d : divisionList) {
+            divisionNames.add(d.getDivisionName());
+        }
+
+        custState.setItems(divisionNames);
     }
 }
