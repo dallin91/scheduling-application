@@ -1,6 +1,7 @@
 package controller;
 
 import DBAccess.DBContacts;
+import DBAccess.DBCustomers;
 import DBAccess.DBUsers;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -16,6 +17,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import model.Contact;
+import model.Customer;
 import model.User;
 
 import java.io.IOException;
@@ -37,7 +39,7 @@ public class AddAppointment implements Initializable {
     @FXML
     private DatePicker apptEndDate;
     @FXML
-    private ComboBox<String> custID;
+    private ComboBox<Integer> custID;
     @FXML
     private ComboBox<Integer> userID;
     @FXML
@@ -63,6 +65,12 @@ public class AddAppointment implements Initializable {
         ObservableList<Integer> userIDList = FXCollections.observableArrayList();
         userObservableList.forEach(user -> userIDList.add(user.getUserID()));
         userID.setItems(userIDList);
+
+        //populate Customer ID combo box
+        ObservableList<Customer> customerObservableList = DBCustomers.getAllCustomers();
+        ObservableList<Integer> customerIDList = FXCollections.observableArrayList();
+        customerObservableList.forEach(customer -> customerIDList.add(customer.getId()));
+        custID.setItems(customerIDList);
     }
 
     public void toSchedulingCancel(ActionEvent actionEvent) throws IOException {
