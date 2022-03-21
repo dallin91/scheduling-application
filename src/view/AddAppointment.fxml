@@ -40,7 +40,7 @@
       <TextField fx:id="apptType" layoutX="110.0" layoutY="168.0" />
       <Button fx:id="saveBtn" layoutX="328.0" layoutY="350.0" mnemonicParsing="false" text="Save" />
       <Button fx:id="cancelBtn" layoutX="407.0" layoutY="350.0" mnemonicParsing="false" onAction="#toSchedulingCancel" text="Cancel" />
-      <ComboBox layoutX="394.0" layoutY="107.0" prefWidth="150.0" />
+      <ComboBox fx:id="contactID" layoutX="394.0" layoutY="107.0" prefWidth="150.0" />
       <ComboBox fx:id="custID" layoutX="110.0" layoutY="259.0" prefWidth="150.0" />
       <ComboBox fx:id="userID" layoutX="110.0" layoutY="293.0" prefWidth="150.0" />
       <ComboBox fx:id="apptStartTime" layoutX="394.0" layoutY="200.0" prefWidth="150.0" />
