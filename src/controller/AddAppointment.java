@@ -22,6 +22,8 @@ import model.User;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
 public class AddAppointment implements Initializable {
@@ -71,6 +73,18 @@ public class AddAppointment implements Initializable {
         ObservableList<Integer> customerIDList = FXCollections.observableArrayList();
         customerObservableList.forEach(customer -> customerIDList.add(customer.getId()));
         custID.setItems(customerIDList);
+
+        //populate time combo boxes
+        ObservableList<String> apptTimes = FXCollections.observableArrayList();
+        LocalTime firstApptTime = LocalTime.MIN.plusHours(8);
+        LocalTime lastApptTime = LocalTime.MAX.minusHours(1).minusMinutes(59);
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm");
+        while (firstApptTime.isBefore(lastApptTime)) {
+            apptTimes.add(dateTimeFormatter.format(firstApptTime));
+            firstApptTime = firstApptTime.plusMinutes(30);
+        }
+        apptStartTime.setItems(apptTimes);
+        apptEndTime.setItems(apptTimes);
     }
 
     public void toSchedulingCancel(ActionEvent actionEvent) throws IOException {
