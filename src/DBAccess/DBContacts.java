@@ -23,7 +23,7 @@ public class DBContacts {
             while(rs.next()) {
                 int contactID = rs.getInt("Contact_ID");
                 String contactName = rs.getString("Contact_Name");
-                String contactEmail = rs.getString("Contact_Email");
+                String contactEmail = rs.getString("Email");
                 Contact contact = new Contact(contactID, contactName, contactEmail);
                 contactsList.add(contact);
             }
