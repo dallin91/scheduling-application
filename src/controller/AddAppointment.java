@@ -3,6 +3,8 @@ package controller;
 import DBAccess.DBContacts;
 import DBAccess.DBCustomers;
 import DBAccess.DBUsers;
+import Database.DBConnection;
+import Database.DBUtility;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -22,7 +24,9 @@ import model.User;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -135,6 +139,32 @@ public class AddAppointment implements Initializable {
                 LocalTime endLocalTime = LocalTime.parse(apptEndTime.getValue(), dateTimeFormatter);
                 LocalDateTime newStart = LocalDateTime.of(startLocalDate, startLocalTime);
                 LocalDateTime newEnd = LocalDateTime.of(endLocalDate, endLocalTime);
+
+                LocalDateTime newCreateDate = LocalDateTime.now();
+                String newCreateBy = "admin";
+                Timestamp newLastUpdate = Timestamp.valueOf(LocalDateTime.now());
+                String newLastUpdatedBy = "admin";
+
+                String sqlStatement = "INSERT INTO appointments (Title, Description, Location, Type, Start, End, " +
+                        "Create_Date, Created_By, Last_Update, Last_Updated_By, Customer_ID, User_ID, Contact_ID) " +
+                        "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
+
+                DBUtility.setPreparedStatement(DBConnection.getConnection(), sqlStatement);
+                PreparedStatement ps = DBUtility.getPreparedStatement();
+                ps.setString(1, newTitle);
+                ps.setString(2, newDescription);
+                ps.setString(3, newLocation);
+                ps.setString(4, newType);
+                ps.setTimestamp(5, Timestamp.valueOf(newStart));
+                ps.setTimestamp(6, Timestamp.valueOf(newEnd));
+                ps.setTimestamp(7, Timestamp.valueOf(newCreateDate));
+                ps.setString(8, newCreateBy);
+                ps.setTimestamp(9, newLastUpdate);
+                ps.setString(10, newLastUpdatedBy);
+                ps.setInt(11, newCustID);
+                ps.setInt(12, newUserID);
+                ps.setInt(13, newContactID);
+                ps.execute();
             }
             else {
                 System.out.println("You cannot add an appointment");
