@@ -100,7 +100,22 @@ public class AddAppointment implements Initializable {
     }
 
     public void addAppointment() throws SQLException {
+        try {
+            if (!apptTitle.getText().equals("") && !apptDescription.getText().equals("") && !apptLocation.getText().equals("")
+            && !apptType.getText().equals("") && (apptStartDate.getValue() != null) && (apptEndDate.getValue() != null)
+                    && !custID.getValue().equals("") && !userID.getValue().equals("") && !contactID.getValue().equals("")
+                    && !apptStartTime.getValue().equals("") && !apptEndTime.getValue().equals("")) {
 
+                System.out.println("Bing bong you can add an appointment");
+
+
+            }
+            else {
+                System.out.println("You cannot add an appointment");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void toSchedulingCancel(ActionEvent actionEvent) throws IOException {
