@@ -22,6 +22,7 @@ import model.User;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
@@ -85,6 +86,21 @@ public class AddAppointment implements Initializable {
         }
         apptStartTime.setItems(apptTimes);
         apptEndTime.setItems(apptTimes);
+    }
+
+    public void toSchedulingSave(ActionEvent actionEvent) throws IOException, SQLException {
+        addAppointment();
+
+        Parent root = FXMLLoader.load(getClass().getResource("/view/SchedulingPage.fxml"));
+        Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setTitle("Scheduling Page");
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public void addAppointment() throws SQLException {
+
     }
 
     public void toSchedulingCancel(ActionEvent actionEvent) throws IOException {
