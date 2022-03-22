@@ -23,6 +23,8 @@ import model.User;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
@@ -108,7 +110,31 @@ public class AddAppointment implements Initializable {
 
                 System.out.println("Bing bong you can add an appointment");
 
+                String newTitle = apptTitle.getText();
+                String newDescription = apptDescription.getText();
+                String newLocation = apptLocation.getText();
+                String newType = apptType.getText();
+                int newCustID = custID.getValue();
+                int newUserID = userID.getValue();
 
+                //setting contact ID value
+                String newContactName = contactID.getValue();
+                int newContactID = 0;
+                ObservableList<Contact> contactObservableList = DBContacts.getAllContacts();
+                for (Contact c : contactObservableList) {
+                    if (newContactName.equals(c.contactName)) {
+                        newContactID = c.getContactID();
+                    }
+                }
+
+                //setting Start and End values
+                LocalDate startLocalDate = apptStartDate.getValue();
+                LocalDate endLocalDate = apptEndDate.getValue();
+                DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm");
+                LocalTime startLocalTime = LocalTime.parse(apptStartTime.getValue(), dateTimeFormatter);
+                LocalTime endLocalTime = LocalTime.parse(apptEndTime.getValue(), dateTimeFormatter);
+                LocalDateTime newStart = LocalDateTime.of(startLocalDate, startLocalTime);
+                LocalDateTime newEnd = LocalDateTime.of(endLocalDate, endLocalTime);
             }
             else {
                 System.out.println("You cannot add an appointment");
