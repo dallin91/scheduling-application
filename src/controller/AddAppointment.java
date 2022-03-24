@@ -13,23 +13,19 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import model.Contact;
 import model.Customer;
 import model.User;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
@@ -145,6 +141,44 @@ public class AddAppointment implements Initializable {
                 Timestamp newLastUpdate = Timestamp.valueOf(LocalDateTime.now());
                 String newLastUpdatedBy = "admin";
 
+                //set business hours EST
+                LocalTime businessOpen = LocalTime.of(8, 0);
+                LocalTime businessClose = LocalTime.of(22, 0);
+                int dayOpen = DayOfWeek.MONDAY.getValue();
+                int dayClose = DayOfWeek.FRIDAY.getValue();
+
+                //converting local time to EST and back
+                //start
+                ZonedDateTime localStartToZone = ZonedDateTime.of(newStart, ZoneId.systemDefault());
+                ZonedDateTime zoneStartToEST = localStartToZone.withZoneSameInstant(ZoneId.of("America/New_York"));
+                LocalTime checkStartTime = zoneStartToEST.toLocalTime();
+                DayOfWeek checkStartDay = zoneStartToEST.toLocalDate().getDayOfWeek();
+                int checkStartDayInt = checkStartDay.getValue();
+                //end
+                ZonedDateTime localEndToZone = ZonedDateTime.of(newEnd, ZoneId.systemDefault());
+                ZonedDateTime zoneEndToEST = localEndToZone.withZoneSameInstant(ZoneId.of("America/New_York"));
+                LocalTime checkEndTime = zoneEndToEST.toLocalTime();
+                DayOfWeek checkEndDay = zoneEndToEST.toLocalDate().getDayOfWeek();
+                int checkEndDayInt = checkEndDay.getValue();
+
+                //check if appointment to add is out of business hours
+                if (checkStartTime.isBefore(businessOpen) || checkStartTime.isAfter(businessClose) ||
+                checkEndTime.isBefore(businessOpen) || checkEndTime.isAfter(businessClose)) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Start/End time error");
+                    alert.setContentText("Business hours are 8:00AM - 10:00PM EST Monday-Friday. Please schedule during this time.");
+                    alert.showAndWait();
+                    return;
+                }
+                if (checkStartDayInt < dayOpen || checkStartDayInt > dayClose || checkEndDayInt < dayOpen ||
+                        checkEndDayInt > dayClose) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Start/End Day Error");
+                    alert.setContentText("Business hours are 8:00AM - 10:00PM EST Monday-Friday. Please schedule during this time.");
+                    alert.showAndWait();
+                    return;
+                }
+
                 String sqlStatement = "INSERT INTO appointments (Title, Description, Location, Type, Start, End, " +
                         "Create_Date, Created_By, Last_Update, Last_Updated_By, Customer_ID, User_ID, Contact_ID) " +
                         "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
@@ -165,6 +199,8 @@ public class AddAppointment implements Initializable {
                 ps.setInt(12, newUserID);
                 ps.setInt(13, newContactID);
                 ps.execute();
+
+
             }
             else {
                 System.out.println("You cannot add an appointment");
