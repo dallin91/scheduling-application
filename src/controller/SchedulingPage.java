@@ -183,6 +183,51 @@ public class SchedulingPage {
     }
 
     public void deleteCustomer(ActionEvent event) throws SQLException {
+        Customer selectedCustomer = customerTable.getSelectionModel().getSelectedItem();
+        int custIDToDelete = selectedCustomer.getId();
 
+        if (selectedCustomer == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Delection Error");
+            alert.setContentText("No customer selected. Please select a customer to delete.");
+            alert.showAndWait();
+        } else {
+            Alert alert2 = new Alert(Alert.AlertType.CONFIRMATION);
+            alert2.setTitle("Confirm Delete");
+            alert2.setContentText("Are you sure you want to delete this customer?");
+            Optional<ButtonType> confirm = alert2.showAndWait();
+
+            if (confirm.isPresent() && confirm.get() == ButtonType.OK) {
+                ObservableList<Appointment> appointmentObservableList = DBAppointments.getAllAppointments();
+                boolean custInAppt = false;
+
+                for (Appointment a : appointmentObservableList) {
+                    if (a.getCustomerId() == custIDToDelete) {
+                        custInAppt = true;
+                        break;
+                    }
+                }
+
+                if (!custInAppt) {
+                    customerTable.getItems().remove(selectedCustomer);
+
+                    //now for the sql bit
+                    String sqlStatement = "DELETE from customers WHERE Customer_ID = ?";
+
+                    DBUtility.setPreparedStatement(DBConnection.getConnection(), sqlStatement);
+                    PreparedStatement ps = DBUtility.getPreparedStatement();
+                    ps.setInt(1, custIDToDelete);
+                    ps.execute();
+
+                } else {
+                    Alert alert3 = new Alert(Alert.AlertType.ERROR);
+                    alert3.setTitle("Cannot Delete");
+                    alert3.setContentText("Customer has appointments scheduled. Please delete customer's appointments before deleting customer.");
+                    alert3.showAndWait();
+                }
+
+
+            }
+        }
     }
 }
