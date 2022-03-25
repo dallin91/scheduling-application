@@ -55,7 +55,7 @@
             <TableColumn fx:id="apptUserID" prefWidth="58.0" text="User ID" />
         </columns>
       </TableView>
-      <Button fx:id="deleteApptBtn" layoutX="675.0" layoutY="573.0" mnemonicParsing="false" text="Delete" />
+      <Button fx:id="deleteApptBtn" layoutX="675.0" layoutY="573.0" mnemonicParsing="false" onAction="#deleteAppt" text="Delete" />
       <Button fx:id="addApptBtn" layoutX="623.0" layoutY="573.0" mnemonicParsing="false" onAction="#toAddAppointment" text="Add" />
       <Button fx:id="updateApptBtn" layoutX="560.0" layoutY="573.0" mnemonicParsing="false" text="Update" />
       <RadioButton layoutX="676.0" layoutY="326.0" mnemonicParsing="false" text="Week">

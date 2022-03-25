@@ -8,10 +8,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import model.Appointment;
@@ -20,6 +17,7 @@ import model.Customer;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 public class SchedulingPage {
     @FXML
@@ -142,5 +140,34 @@ public class SchedulingPage {
         stage.setTitle("Add Appointment");
         stage.setScene(scene);
         stage.show();
+    }
+
+    public void deleteAppt(ActionEvent event) {
+        Appointment selectedAppointment = appointmentTable.getSelectionModel().getSelectedItem();
+        int selectedID = selectedAppointment.getAppointmentId();
+        String selectedType = selectedAppointment.getType();
+
+        if (selectedAppointment == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Deletion Error");
+            alert.setContentText("No appointment selected. Please select an appointment to cancel.");
+            alert.showAndWait();
+        } else {
+            Alert alert3 = new Alert(Alert.AlertType.CONFIRMATION);
+            alert3.setTitle("Confirm Delete");
+            alert3.setContentText("Are you sure you want to cancel this appointment?");
+            Optional<ButtonType> confirm = alert3.showAndWait();
+
+            if (confirm.isPresent() && confirm.get() == ButtonType.OK) {
+                Alert alert4 = new Alert(Alert.AlertType.INFORMATION);
+                alert4.setTitle("Appointment Canceled");
+                alert4.setContentText("Appointment with ID " + selectedID + " and type " + selectedType + " has been canceled!" );
+                alert4.showAndWait();
+
+                appointmentTable.getItems().remove(selectedAppointment);
+
+                //now to delete from DB
+            }
+        }
     }
 }
