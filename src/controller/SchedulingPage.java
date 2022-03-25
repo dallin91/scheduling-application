@@ -181,4 +181,8 @@ public class SchedulingPage {
             }
         }
     }
+
+    public void deleteCustomer(ActionEvent event) throws SQLException {
+
+    }
 }
