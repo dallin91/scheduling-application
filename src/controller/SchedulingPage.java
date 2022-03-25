@@ -2,6 +2,8 @@ package controller;
 
 import DBAccess.DBAppointments;
 import DBAccess.DBCustomers;
+import Database.DBConnection;
+import Database.DBUtility;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -15,6 +17,7 @@ import model.Appointment;
 import model.Customer;
 
 import java.io.IOException;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -142,7 +145,7 @@ public class SchedulingPage {
         stage.show();
     }
 
-    public void deleteAppt(ActionEvent event) {
+    public void deleteAppt(ActionEvent event) throws SQLException {
         Appointment selectedAppointment = appointmentTable.getSelectionModel().getSelectedItem();
         int selectedID = selectedAppointment.getAppointmentId();
         String selectedType = selectedAppointment.getType();
@@ -167,6 +170,14 @@ public class SchedulingPage {
                 appointmentTable.getItems().remove(selectedAppointment);
 
                 //now to delete from DB
+                int apptIDToDelete = selectedAppointment.getAppointmentId();
+
+                String sqlStatement = "DELETE from appointments WHERE Appointment_ID = ?";
+
+                DBUtility.setPreparedStatement(DBConnection.getConnection(), sqlStatement);
+                PreparedStatement ps = DBUtility.getPreparedStatement();
+                ps.setInt(1, apptIDToDelete);
+                ps.execute();
             }
         }
     }
