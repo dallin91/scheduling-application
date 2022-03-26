@@ -16,6 +16,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import model.Appointment;
 import model.Contact;
 import model.Customer;
 import model.User;
@@ -86,6 +87,32 @@ public class UpdateAppointment implements Initializable {
         apptStartTime.setItems(apptTimes);
         apptEndTime.setItems(apptTimes);
 
+        //populate text fields
+        Appointment chosenAppointment = SchedulingPage.getAppointmentToUpdate();
+
+        apptID.setText(String.valueOf(chosenAppointment.getAppointmentId()));
+        apptTitle.setText(String.valueOf(chosenAppointment.getTitle()));
+        apptDescription.setText(String.valueOf(chosenAppointment.getDescription()));
+        apptLocation.setText(String.valueOf(chosenAppointment.getLocation()));
+        apptType.setText(String.valueOf(chosenAppointment.getType()));
+
+        //populate combo boxes
+        custID.setValue(chosenAppointment.getCustomerId());
+        userID.setValue(chosenAppointment.getUserId());
+        int contactIDToUpdate = chosenAppointment.getContactId();
+        String contactName = "";
+        for (Contact c : contactObservableList) {
+            if (contactIDToUpdate == c.getContactID()) {
+                contactName = c.getContactName();
+            }
+        }
+        contactID.setValue(contactName);
+
+        //populate date and time fields
+        apptStartTime.setValue(chosenAppointment.getStartTime().toLocalTime().toString());
+        apptEndTime.setValue(chosenAppointment.getEndTime().toLocalTime().toString());
+        apptStartDate.setValue(chosenAppointment.getStartTime().toLocalDate());
+        apptEndDate.setValue(chosenAppointment.getEndTime().toLocalDate());
 
     }
 

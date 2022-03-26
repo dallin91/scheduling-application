@@ -124,6 +124,10 @@ public class SchedulingPage {
         }
     }
 
+    public static Appointment getAppointmentToUpdate() {
+        return appointmentToUpdate;
+    }
+
     public void toUpdateCustomer(ActionEvent actionEvent) throws IOException {
         customerToUpdate = customerTable.getSelectionModel().getSelectedItem();
 
