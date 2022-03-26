@@ -62,6 +62,7 @@ public class SchedulingPage {
     @FXML
     private TableColumn<Appointment, Integer> apptUserID;
     private static Customer customerToUpdate;
+    private static Appointment appointmentToUpdate;
 
 
     public void initialize() throws SQLException {
@@ -102,6 +103,25 @@ public class SchedulingPage {
     public void populateAppointmentTableView() throws SQLException {
         ObservableList<Appointment> appointmentList = DBAppointments.getAllAppointments();
         appointmentTable.setItems(appointmentList);
+    }
+
+    public void toUpdateAppointment(ActionEvent actionEvent) throws IOException {
+        appointmentToUpdate = appointmentTable.getSelectionModel().getSelectedItem();
+
+        if (appointmentToUpdate != null) {
+            Parent root = FXMLLoader.load(getClass().getResource("/view/UpdateAppointment.fxml"));
+            Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setTitle("Update Appointment");
+            stage.setScene(scene);
+            stage.show();
+        }
+        else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("No Appointment Selected");
+            alert.setContentText("No appointment selected to update. Please select an appointment.");
+            alert.showAndWait();
+        }
     }
 
     public void toUpdateCustomer(ActionEvent actionEvent) throws IOException {
