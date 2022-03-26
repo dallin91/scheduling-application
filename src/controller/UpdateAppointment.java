@@ -3,6 +3,8 @@ package controller;
 import DBAccess.DBContacts;
 import DBAccess.DBCustomers;
 import DBAccess.DBUsers;
+import Database.DBConnection;
+import Database.DBUtility;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -11,10 +13,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import model.Appointment;
 import model.Contact;
@@ -23,8 +22,10 @@ import model.User;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.time.LocalTime;
+import java.sql.Timestamp;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
@@ -116,8 +117,114 @@ public class UpdateAppointment implements Initializable {
 
     }
 
+    public void updateAppointment() throws SQLException {
+        try {
+            if (!apptTitle.getText().equals("") && !apptDescription.getText().equals("") && !apptLocation.getText().equals("")
+                    && !apptType.getText().equals("") && (apptStartDate.getValue() != null) && (apptEndDate.getValue() != null)
+                    && !custID.getValue().equals("") && !userID.getValue().equals("") && !contactID.getValue().equals("")
+                    && !apptStartTime.getValue().equals("") && !apptEndTime.getValue().equals("")) {
+
+                System.out.println("Bing bong you can add an appointment");
+
+                String newTitle = apptTitle.getText();
+                String newDescription = apptDescription.getText();
+                String newLocation = apptLocation.getText();
+                String newType = apptType.getText();
+                int newCustID = custID.getValue();
+                int newUserID = userID.getValue();
+                String newApptID = apptID.getText();
+
+                //setting contact ID value
+                String newContactName = contactID.getValue();
+                int newContactID = 0;
+                ObservableList<Contact> contactObservableList = DBContacts.getAllContacts();
+                for (Contact c : contactObservableList) {
+                    if (newContactName.equals(c.contactName)) {
+                        newContactID = c.getContactID();
+                    }
+                }
+
+                //setting Start and End values
+                LocalDate startLocalDate = apptStartDate.getValue();
+                LocalDate endLocalDate = apptEndDate.getValue();
+                DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm");
+                LocalTime startLocalTime = LocalTime.parse(apptStartTime.getValue(), dateTimeFormatter);
+                LocalTime endLocalTime = LocalTime.parse(apptEndTime.getValue(), dateTimeFormatter);
+                LocalDateTime newStart = LocalDateTime.of(startLocalDate, startLocalTime);
+                LocalDateTime newEnd = LocalDateTime.of(endLocalDate, endLocalTime);
+
+                Timestamp newLastUpdate = Timestamp.valueOf(LocalDateTime.now());
+                String newLastUpdatedBy = "admin";
+
+                //set business hours EST
+                LocalTime businessOpen = LocalTime.of(8, 0);
+                LocalTime businessClose = LocalTime.of(22, 0);
+                int dayOpen = DayOfWeek.MONDAY.getValue();
+                int dayClose = DayOfWeek.FRIDAY.getValue();
+
+                //converting local time to EST and back
+                //start
+                ZonedDateTime localStartToZone = ZonedDateTime.of(newStart, ZoneId.systemDefault());
+                ZonedDateTime zoneStartToEST = localStartToZone.withZoneSameInstant(ZoneId.of("America/New_York"));
+                LocalTime checkStartTime = zoneStartToEST.toLocalTime();
+                DayOfWeek checkStartDay = zoneStartToEST.toLocalDate().getDayOfWeek();
+                int checkStartDayInt = checkStartDay.getValue();
+                //end
+                ZonedDateTime localEndToZone = ZonedDateTime.of(newEnd, ZoneId.systemDefault());
+                ZonedDateTime zoneEndToEST = localEndToZone.withZoneSameInstant(ZoneId.of("America/New_York"));
+                LocalTime checkEndTime = zoneEndToEST.toLocalTime();
+                DayOfWeek checkEndDay = zoneEndToEST.toLocalDate().getDayOfWeek();
+                int checkEndDayInt = checkEndDay.getValue();
+
+                //check if appointment to add is out of business hours
+                if (checkStartTime.isBefore(businessOpen) || checkStartTime.isAfter(businessClose) ||
+                        checkEndTime.isBefore(businessOpen) || checkEndTime.isAfter(businessClose)) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Start/End time error");
+                    alert.setContentText("Business hours are 8:00AM - 10:00PM EST Monday-Friday. Please schedule during this time.");
+                    alert.showAndWait();
+                    return;
+                }
+                if (checkStartDayInt < dayOpen || checkStartDayInt > dayClose || checkEndDayInt < dayOpen ||
+                        checkEndDayInt > dayClose) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Start/End Day Error");
+                    alert.setContentText("Business hours are 8:00AM - 10:00PM EST Monday-Friday. Please schedule during this time.");
+                    alert.showAndWait();
+                    return;
+                }
+
+                String sqlStatement = "UPDATE appointments SET Title = ?, Description = ?, Location = ?, Type = ?, Start = ?, End = ?, " +
+                        "Last_Update = ?, Last_Updated_By = ?, Customer_ID = ?, User_ID = ?, Contact_ID = ? WHERE Appointment_ID = ?";
+
+                DBUtility.setPreparedStatement(DBConnection.getConnection(), sqlStatement);
+                PreparedStatement ps = DBUtility.getPreparedStatement();
+                ps.setString(1, newTitle);
+                ps.setString(2, newDescription);
+                ps.setString(3, newLocation);
+                ps.setString(4, newType);
+                ps.setTimestamp(5, Timestamp.valueOf(newStart));
+                ps.setTimestamp(6, Timestamp.valueOf(newEnd));
+                ps.setTimestamp(7, newLastUpdate);
+                ps.setString(8, newLastUpdatedBy);
+                ps.setInt(9, newCustID);
+                ps.setInt(10, newUserID);
+                ps.setInt(11, newContactID);
+                ps.setString(12, newApptID);
+                ps.execute();
+
+
+            }
+            else {
+                System.out.println("You cannot add an appointment");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public void toSchedulingSave(ActionEvent actionEvent) throws IOException, SQLException {
-        //addAppointment();
+        updateAppointment();
 
         Parent root = FXMLLoader.load(getClass().getResource("/view/SchedulingPage.fxml"));
         Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();
