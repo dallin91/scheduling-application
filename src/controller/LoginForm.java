@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.ZoneId;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class LoginForm implements Initializable {
@@ -75,8 +76,8 @@ public class LoginForm implements Initializable {
             stage.show();
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Incorrect Login");
-            alert.setContentText("Incorrect username and/or password. Please check username and password and try again.");
+            alert.setTitle("Invalid Login");
+            alert.setContentText("Invalid username and/or password. Please check username and password and try again.");
             alert.showAndWait();
         }
 
@@ -86,5 +87,19 @@ public class LoginForm implements Initializable {
         ZoneId userZone = ZoneId.systemDefault();
         zoneIdLabel.setText("Current Location: " + userZone);
         System.out.println(userZone);
+/*
+        Locale france = new Locale("fr", "FR");
+
+        ResourceBundle rb = ResourceBundle.getBundle("controller/LanguageFile_fr.properties", Locale.getDefault());
+
+        if(Locale.getDefault().getLanguage().equals("fr")) {
+            Locale.setDefault(france);
+            loginWelcomeLabel.setText(rb.getString("Please,enter,your,login,information").replaceAll(",", " "));
+            userIdLabel.setText(rb.getString("User,ID").replaceAll(",", " "));
+            passwordLabel.setText(rb.getString("Password").replaceAll(",", " "));
+            loginBtn.setText(rb.getString("Login").replaceAll(",", " "));
+            cancelBtn.setText(rb.getString("Cancel").replaceAll(",", " "));
+        }
+        */
     }
 }
