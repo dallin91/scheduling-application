@@ -1,5 +1,7 @@
 package controller;
 
+import DBAccess.DBUsers;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -10,6 +12,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import model.User;
 
 import java.io.IOException;
 import java.net.URL;
@@ -48,20 +51,31 @@ public class LoginForm implements Initializable {
     public void loginValidate(ActionEvent event) throws IOException, SQLException {
         String user = idField.getText();
         String password = passwordField.getText();
-        if (user.equals("test") && password.equals("test")) {
-            //transition to new scene
+        ObservableList<User> allUsers = DBUsers.getAllUsers();
+        boolean validUser = false;
 
+        for (User u : allUsers) {
+            if (u.getUserName().equals(user) && u.getUserPassword().equals(password)) {
+                validUser = true;
+                break;
+
+            } else {
+                validUser = false;
+
+            }
+        }
+
+        if(validUser) {
             Parent root = FXMLLoader.load(getClass().getResource("/view/SchedulingPage.fxml"));
             Stage stage = (Stage) ((Button)event.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);
             stage.setTitle("Scheduling Page");
             stage.setScene(scene);
             stage.show();
-        }
-        else {
-            //add an error message
+        } else {
             System.out.println("Imposter detected. Prepare to be annihilated");
         }
+
     }
 
     public void zoneAndLanguage() {
