@@ -8,6 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -73,7 +74,10 @@ public class LoginForm implements Initializable {
             stage.setScene(scene);
             stage.show();
         } else {
-            System.out.println("Imposter detected. Prepare to be annihilated");
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Incorrect Login");
+            alert.setContentText("Incorrect username and/or password. Please check username and password and try again.");
+            alert.showAndWait();
         }
 
     }
