@@ -127,6 +127,7 @@ public class AddCustomer {
         custCountry.setItems(countryNames);
     }
 
+
     public void setCustState() throws SQLException {
 
         ObservableList<FirstLevelDivision> divisionList = DBFirstLevelDivision.getFirstLevelDivisions();
@@ -137,6 +138,31 @@ public class AddCustomer {
         }
 
         custState.setItems(divisionNames);
+    }
+
+    public void filterCustState() throws SQLException {
+        ObservableList<FirstLevelDivision> divisionList = DBFirstLevelDivision.getFirstLevelDivisions();
+        ObservableList<String> divisionNamesToSet = FXCollections.observableArrayList();
+        ObservableList<Country> countryList = DBCountries.getAllCountries();
+        ObservableList<String> countryNames = FXCollections.observableArrayList();
+        String selectedCountry = custCountry.getSelectionModel().getSelectedItem();
+        int countryID = 0;
+
+
+        for (Country c : countryList) {
+            if (c.getCountryName().equals(selectedCountry)) {
+                countryID = c.getCountryID();
+                break;
+            }
+        }
+
+        for (FirstLevelDivision f : divisionList) {
+            if(f.getCountryID() == countryID) {
+                divisionNamesToSet.add(f.getDivisionName());
+            }
+        }
+
+        custState.setItems(divisionNamesToSet);
     }
 
     public void toSchedulingCancel(ActionEvent actionEvent) throws IOException {
