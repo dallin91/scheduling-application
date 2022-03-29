@@ -91,10 +91,10 @@ public class LoginForm implements Initializable {
         ZoneId userZone = ZoneId.systemDefault();
         zoneIdLabel.setText("Current Location: " + userZone);
         System.out.println(userZone);
-/*
+
         Locale france = new Locale("fr", "FR");
 
-        ResourceBundle rb = ResourceBundle.getBundle("controller/LanguageFile_fr.properties", Locale.getDefault());
+        ResourceBundle rb = ResourceBundle.getBundle("controller/Nat", Locale.FRENCH);
 
         if(Locale.getDefault().getLanguage().equals("fr")) {
             Locale.setDefault(france);
@@ -104,7 +104,7 @@ public class LoginForm implements Initializable {
             loginBtn.setText(rb.getString("Login").replaceAll(",", " "));
             cancelBtn.setText(rb.getString("Cancel").replaceAll(",", " "));
         }
-        */
+
     }
 
     public void checkUpcomingAppointments() {
