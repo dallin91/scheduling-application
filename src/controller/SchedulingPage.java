@@ -4,6 +4,7 @@ import DBAccess.DBAppointments;
 import DBAccess.DBCustomers;
 import Database.DBConnection;
 import Database.DBUtility;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -19,8 +20,15 @@ import model.Customer;
 import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.chrono.ChronoLocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+import java.util.Locale;
 import java.util.Optional;
+
+import static java.time.LocalDate.now;
 
 public class SchedulingPage {
     @FXML
@@ -61,6 +69,14 @@ public class SchedulingPage {
     private TableColumn<Appointment, Integer> apptCustID;
     @FXML
     private TableColumn<Appointment, Integer> apptUserID;
+    @FXML
+    private ToggleGroup appointmentViewToggle;
+    @FXML
+    private RadioButton allBtn;
+    @FXML
+    private RadioButton monthBtn;
+    @FXML
+    private RadioButton weekBtn;
     private static Customer customerToUpdate;
     private static Appointment appointmentToUpdate;
 
@@ -103,6 +119,26 @@ public class SchedulingPage {
     public void populateAppointmentTableView() throws SQLException {
         ObservableList<Appointment> appointmentList = DBAppointments.getAllAppointments();
         appointmentTable.setItems(appointmentList);
+    }
+
+    public void appointmentWeekView() throws SQLException {
+
+        ObservableList<Appointment> weekAppointments = DBAppointments.getWeekAppointments();
+        appointmentTable.setItems(weekAppointments);
+        appointmentTable.refresh();
+
+    }
+
+    public void appointmentMonthView() throws SQLException {
+        ObservableList<Appointment> monthAppointments = DBAppointments.getMonthAppointments();
+        appointmentTable.setItems(monthAppointments);
+        appointmentTable.refresh();
+    }
+
+    public void appointmentAllView() throws SQLException {
+        ObservableList<Appointment> allAppointments = DBAppointments.getAllAppointments();
+        appointmentTable.setItems(allAppointments);
+        appointmentTable.refresh();
     }
 
     public void toUpdateAppointment(ActionEvent actionEvent) throws IOException {

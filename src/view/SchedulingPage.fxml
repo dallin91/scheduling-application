@@ -58,12 +58,12 @@
       <Button fx:id="deleteApptBtn" layoutX="675.0" layoutY="573.0" mnemonicParsing="false" onAction="#deleteAppt" text="Delete" />
       <Button fx:id="addApptBtn" layoutX="623.0" layoutY="573.0" mnemonicParsing="false" onAction="#toAddAppointment" text="Add" />
       <Button fx:id="updateApptBtn" layoutX="560.0" layoutY="573.0" mnemonicParsing="false" onAction="#toUpdateAppointment" text="Update" />
-      <RadioButton layoutX="676.0" layoutY="326.0" mnemonicParsing="false" text="Week">
+      <RadioButton fx:id="weekBtn" layoutX="676.0" layoutY="326.0" mnemonicParsing="false" onAction="#appointmentWeekView" text="Week">
          <toggleGroup>
             <ToggleGroup fx:id="appointmentViewToggle" />
          </toggleGroup>
       </RadioButton>
-      <RadioButton layoutX="604.0" layoutY="326.0" mnemonicParsing="false" text="Month" toggleGroup="$appointmentViewToggle" />
-      <RadioButton layoutX="553.0" layoutY="326.0" mnemonicParsing="false" selected="true" text="All" toggleGroup="$appointmentViewToggle" />
+      <RadioButton fx:id="monthBtn" layoutX="604.0" layoutY="326.0" mnemonicParsing="false" onAction="#appointmentMonthView" text="Month" toggleGroup="$appointmentViewToggle" />
+      <RadioButton fx:id="allBtn" layoutX="553.0" layoutY="326.0" mnemonicParsing="false" onAction="#appointmentAllView" selected="true" text="All" toggleGroup="$appointmentViewToggle" />
    </children>
 </AnchorPane>

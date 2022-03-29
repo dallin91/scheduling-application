@@ -1,6 +1,7 @@
 package DBAccess;
 
 import Database.DBConnection;
+import Database.DBUtility;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.Appointment;
@@ -41,5 +42,87 @@ public class DBAppointments {
         }
 
         return appointmentsList;
+    }
+
+    public static ObservableList<Appointment> getWeekAppointments() throws SQLException {
+        ObservableList<Appointment> appointmentObservableList = FXCollections.observableArrayList();
+
+        LocalDateTime today = LocalDateTime.now();
+        LocalDateTime nextWeek = today.plusDays(7);
+
+        String sqlStatement = "SELECT * FROM appointments WHERE Start > ? AND Start < ?";
+
+        DBUtility.setPreparedStatement(DBConnection.getConnection(), sqlStatement);
+        PreparedStatement ps = DBUtility.getPreparedStatement();
+
+        ps.setDate(1, java.sql.Date.valueOf(today.toLocalDate()));
+        ps.setDate(2, java.sql.Date.valueOf(nextWeek.toLocalDate()));
+
+        try {
+            ps.execute();
+            ResultSet rs = ps.getResultSet();
+
+            while(rs.next()) {
+                int appointmentId = rs.getInt("Appointment_ID");
+                String title = rs.getString("Title");
+                String description = rs.getString("Description");
+                String location = rs.getString("Location");
+                int contactId =rs.getInt("Contact_ID");
+                String type = rs.getString("Type");
+                LocalDateTime startTime = rs.getTimestamp("Start").toLocalDateTime();
+                LocalDateTime endTime = rs.getTimestamp("End").toLocalDateTime();
+                int customerId = rs.getInt("Customer_ID");
+                int userId = rs.getInt("User_ID");
+
+                Appointment appointment = new Appointment(appointmentId, title, description, location, contactId, type,
+                        startTime, endTime, customerId, userId);
+                appointmentObservableList.add(appointment);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return appointmentObservableList;
+    }
+
+    public static ObservableList<Appointment> getMonthAppointments() throws SQLException {
+        ObservableList<Appointment> appointmentObservableList = FXCollections.observableArrayList();
+
+        LocalDateTime today = LocalDateTime.now();
+        LocalDateTime nextMonth = today.plusDays(30);
+
+        String sqlStatement = "SELECT * FROM appointments WHERE Start > ? AND Start < ?";
+
+        DBUtility.setPreparedStatement(DBConnection.getConnection(), sqlStatement);
+        PreparedStatement ps = DBUtility.getPreparedStatement();
+
+        ps.setDate(1, java.sql.Date.valueOf(today.toLocalDate()));
+        ps.setDate(2, java.sql.Date.valueOf(nextMonth.toLocalDate()));
+
+        try {
+            ps.execute();
+            ResultSet rs = ps.getResultSet();
+
+            while(rs.next()) {
+                int appointmentId = rs.getInt("Appointment_ID");
+                String title = rs.getString("Title");
+                String description = rs.getString("Description");
+                String location = rs.getString("Location");
+                int contactId =rs.getInt("Contact_ID");
+                String type = rs.getString("Type");
+                LocalDateTime startTime = rs.getTimestamp("Start").toLocalDateTime();
+                LocalDateTime endTime = rs.getTimestamp("End").toLocalDateTime();
+                int customerId = rs.getInt("Customer_ID");
+                int userId = rs.getInt("User_ID");
+
+                Appointment appointment = new Appointment(appointmentId, title, description, location, contactId, type,
+                        startTime, endTime, customerId, userId);
+                appointmentObservableList.add(appointment);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return appointmentObservableList;
     }
 }
