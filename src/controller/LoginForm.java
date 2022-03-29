@@ -79,10 +79,21 @@ public class LoginForm implements Initializable {
             stage.setScene(scene);
             stage.show();
         } else {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Invalid Login");
-            alert.setContentText("Invalid username and/or password. Please check username and password and try again.");
-            alert.showAndWait();
+            Locale france = new Locale("fr", "FR");
+
+            ResourceBundle rb = ResourceBundle.getBundle("controller/Nat", Locale.FRENCH);
+
+            if (Locale.getDefault().getLanguage().equals("fr")) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle(rb.getString("Invalid,Login").replaceAll(",", " "));
+                alert.setContentText(rb.getString("Invalid,username,or,password.").replaceAll(",", " "));
+                alert.showAndWait();
+            } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Invalid Login");
+                alert.setContentText("Invalid username and/or password. Please check username and password and try again.");
+                alert.showAndWait();
+            }
         }
 
     }
