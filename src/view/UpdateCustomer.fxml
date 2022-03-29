@@ -27,7 +27,7 @@
       <Label layoutX="367.0" layoutY="68.0" text="ID" />
       <TextField fx:id="custID" editable="false" layoutX="403.0" layoutY="64.0" />
       <ComboBox fx:id="custState" layoutX="161.0" layoutY="188.0" prefWidth="150.0" />
-      <ComboBox fx:id="custCountry" layoutX="161.0" layoutY="223.0" prefWidth="150.0" />
+      <ComboBox fx:id="custCountry" layoutX="161.0" layoutY="223.0" onAction="#filterCustState" prefWidth="150.0" />
       <Label layoutX="37.0" layoutY="192.0" text="State/Province" />
       <Label layoutX="37.0" layoutY="227.0" text="Country" />
    </children>
