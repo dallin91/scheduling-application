@@ -1,5 +1,6 @@
 package controller;
 
+import DBAccess.DBAppointments;
 import DBAccess.DBContacts;
 import DBAccess.DBCustomers;
 import DBAccess.DBUsers;
@@ -192,6 +193,32 @@ public class UpdateAppointment implements Initializable {
                     alert.setContentText("Business hours are 8:00AM - 10:00PM EST Monday-Friday. Please schedule during this time.");
                     alert.showAndWait();
                     return;
+                }
+
+                //check for overlapping customer appointments
+                ObservableList<Appointment> appointmentObservableList = DBAppointments.getAllAppointments();
+                for (Appointment a : appointmentObservableList) {
+                    LocalDateTime startTimes = a.getStartTime();
+                    LocalDateTime endTimes = a.getEndTime();
+                    int customerIDs = a.getCustomerId();
+
+                    if (newCustID == customerIDs && (newStart.isEqual(startTimes) || newStart.isAfter(startTimes)) &&
+                            (newStart.isEqual(endTimes) || newStart.isBefore(endTimes))) {
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setTitle("Appointment Overlap");
+                        alert.setContentText("Customer already has appointment scheduled during this time. Appointment not added.");
+                        alert.showAndWait();
+                        return;
+                    }
+                    if (newCustID == customerIDs && (newEnd.isEqual(startTimes) || newEnd.isAfter(startTimes)) &&
+                            (newEnd.isEqual(endTimes) || newEnd.isBefore(endTimes))) {
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setTitle("Appointment Overlap");
+                        alert.setContentText("Customer already has appointment scheduled during this time. Appointment not added.");
+                        alert.showAndWait();
+                        return;
+                    }
+
                 }
 
                 String sqlStatement = "UPDATE appointments SET Title = ?, Description = ?, Location = ?, Type = ?, Start = ?, End = ?, " +
