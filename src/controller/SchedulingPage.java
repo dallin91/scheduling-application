@@ -233,6 +233,12 @@ public class SchedulingPage {
                 }
 
                 if (!custInAppt) {
+
+                    Alert alert4 = new Alert(Alert.AlertType.INFORMATION);
+                    alert4.setTitle("Customer Removed");
+                    alert4.setContentText("The customer has been successfully deleted!" );
+                    alert4.showAndWait();
+
                     customerTable.getItems().remove(selectedCustomer);
 
                     //now for the sql bit
