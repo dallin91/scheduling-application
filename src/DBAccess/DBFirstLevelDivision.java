@@ -9,8 +9,16 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * This class serves as the way to access the first level divisions table in the database
+ *
+ * @author Dallin Reeves
+ * */
 public class DBFirstLevelDivision {
 
+    /**
+     * Returns all first level divisions
+     * */
     public static ObservableList<FirstLevelDivision> getFirstLevelDivisions() throws SQLException {
         ObservableList<FirstLevelDivision> firstLevelDivisionList = FXCollections.observableArrayList();
 
