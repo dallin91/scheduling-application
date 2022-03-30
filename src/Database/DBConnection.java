@@ -5,7 +5,11 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 
-
+/**
+ * This class establishes the connection with the database
+ *
+ * @author Dallin Reeves
+ * */
 public class DBConnection {
 
     private static final String protocol = "jdbc";
@@ -23,6 +27,9 @@ public class DBConnection {
     private static final String password = "Passw0rd!";
     private static Connection conn = null;
 
+    /**
+     * Starts connection with database
+     * */
     public static Connection startConnection() {
         System.out.println("Connecting...");
         try {
@@ -36,10 +43,16 @@ public class DBConnection {
         return conn;
     }
 
+    /**
+     * Returns connection with database
+     * */
     public static Connection getConnection() {
         return conn;
     }
 
+    /**
+     * Closes connection with database
+     * */
     public static void closeConnection() {
         try {
             conn.close();
