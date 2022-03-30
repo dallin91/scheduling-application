@@ -29,6 +29,11 @@ import java.time.ZoneId;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+/**
+ * This class is the controller for LoginForm.fxml
+ *
+ * @author Dallin Reeves
+ * */
 public class LoginForm implements Initializable {
     @FXML
     private Label loginWelcomeLabel;
@@ -48,17 +53,34 @@ public class LoginForm implements Initializable {
     private Button cancelBtn;
     boolean validUser = false;
 
+    /**
+     * This initializes the form.
+     *
+     * @param url
+     * @param resourceBundle
+     * */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle){
         zoneAndLanguage();
         checkUpcomingAppointments();
     }
 
+    /**
+     * This will close out of the program
+     *
+     * @param event
+     * */
     public void handleCancelButtonAction(ActionEvent event) {
         Stage stage = (Stage) cancelBtn.getScene().getWindow();
         stage.close();
     }
 
+    /**
+     * This validates that the user logging in has the correct username and password and will change the scene to the
+     * scheduling page if they are a valid user.
+     *
+     * @param event
+     * */
     public void loginValidate(ActionEvent event) throws IOException, SQLException {
         String user = idField.getText();
         String password = passwordField.getText();
@@ -104,10 +126,12 @@ public class LoginForm implements Initializable {
         }
 
         trackLoginAttempts();
-        System.out.println(validUser);
 
     }
 
+    /**
+     * This determines the users zone and language settings. If needed, this will also translate the window to french
+     * */
     public void zoneAndLanguage() {
         ZoneId userZone = ZoneId.systemDefault();
         zoneIdLabel.setText("Current Location: " + userZone);
@@ -128,6 +152,10 @@ public class LoginForm implements Initializable {
 
     }
 
+    /**
+     * This checks if the user has any appointments within 15 minutes of login and will send an alert if that is the
+     * case
+     * */
     public void checkUpcomingAppointments() {
         LocalDateTime now = LocalDateTime.now();
         LocalDateTime soon = now.plusMinutes(15);
@@ -153,6 +181,9 @@ public class LoginForm implements Initializable {
         }
     }
 
+    /**
+     * This tracks both successful and unsuccesful login attempts, logging them in login_activity.txt
+     * */
     public void trackLoginAttempts() throws IOException {
         LocalDate date = LocalDateTime.now().toLocalDate();
         Timestamp timestamp = Timestamp.valueOf(LocalDateTime.now());
