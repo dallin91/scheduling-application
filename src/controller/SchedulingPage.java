@@ -77,6 +77,8 @@ public class SchedulingPage {
     private RadioButton monthBtn;
     @FXML
     private RadioButton weekBtn;
+    @FXML
+    private Button exitButton;
     private static Customer customerToUpdate;
     private static Appointment appointmentToUpdate;
 
@@ -304,6 +306,11 @@ public class SchedulingPage {
         stage.setTitle("Reports");
         stage.setScene(scene);
         stage.show();
+    }
+
+    public void exitButtonAction(ActionEvent actionEvent) {
+        Stage stage = (Stage) exitButton.getScene().getWindow();
+        stage.close();
     }
 
 
