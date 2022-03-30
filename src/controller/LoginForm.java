@@ -17,9 +17,13 @@ import javafx.stage.Stage;
 import model.Appointment;
 import model.User;
 
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.URL;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Locale;
@@ -42,6 +46,7 @@ public class LoginForm implements Initializable {
     private Button loginBtn;
     @FXML
     private Button cancelBtn;
+    boolean validUser = false;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle){
@@ -96,6 +101,8 @@ public class LoginForm implements Initializable {
             }
         }
 
+        trackLoginAttempts();
+
     }
 
     public void zoneAndLanguage() {
@@ -142,4 +149,21 @@ public class LoginForm implements Initializable {
             }
         }
     }
+
+    public void trackLoginAttempts() throws IOException {
+        LocalDate date = LocalDateTime.now().toLocalDate();
+        Timestamp timestamp = Timestamp.valueOf(LocalDateTime.now());
+        String user = idField.getText();
+        FileWriter fw = new FileWriter("login_activity.txt", true);
+        PrintWriter file = new PrintWriter(fw);
+        if (validUser) {
+            file.println("User: " + user + " successfully logged in at " + date + timestamp);
+        } else {
+            file.println("User: " + user + " gave invalid login at " + date + timestamp);
+        }
+
+        file.close();
+    }
+
+
 }
