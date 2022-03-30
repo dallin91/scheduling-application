@@ -1,8 +1,10 @@
 package controller;
 
 import DBAccess.DBAppointments;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -10,8 +12,11 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import model.Appointment;
 
+import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.time.Month;
+import java.util.ResourceBundle;
 
 public class Reports {
 
@@ -51,7 +56,11 @@ public class Reports {
 
     public void initialize() throws SQLException {
 
+
         populateAppointmentTableView();
+        populateMonthCombo();
+
+        System.out.println("Hello there");
 
 
         apptID.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
@@ -69,6 +78,17 @@ public class Reports {
     public void populateAppointmentTableView() throws SQLException {
         ObservableList<Appointment> appointmentList = DBAppointments.getAllAppointments();
         appointmentsTable.setItems(appointmentList);
+    }
+
+    public void populateMonthCombo() {
+        ObservableList<Appointment> allAppointments = DBAppointments.getAllAppointments();
+        ObservableList<Month> allMonths = FXCollections.observableArrayList();
+
+        for (Appointment a : allAppointments) {
+            Month month = a.getStartTime().getMonth();
+            allMonths.add(month);
+        }
+
     }
 
 }

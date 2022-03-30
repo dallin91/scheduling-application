@@ -298,7 +298,12 @@ public class SchedulingPage {
     }
 
     public void toReports(ActionEvent actionEvent) throws IOException {
-        System.out.println("ok this should work");
+        Parent root = FXMLLoader.load(getClass().getResource("/view/Reports.fxml"));
+        Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setTitle("Reports");
+        stage.setScene(scene);
+        stage.show();
     }
 
 
