@@ -4,14 +4,17 @@ import DBAccess.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 import model.*;
 
+import javafx.event.ActionEvent;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
@@ -57,6 +60,8 @@ public class Reports {
     private TableColumn<Appointment, LocalDateTime> apptEnd;
     @FXML
     private TableColumn<Appointment, Integer> apptCustID;
+    @FXML
+    private Button exitBtn;
 
 
     /**
@@ -216,6 +221,20 @@ public class Reports {
 
 
 
+    }
+
+    /**
+     * Returns to the scheduling page
+     *
+     * @param actionEvent
+     * */
+    public void toSchedulingExit(ActionEvent actionEvent) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/view/SchedulingPage.fxml"));
+        Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setTitle("Scheduling Page");
+        stage.setScene(scene);
+        stage.show();
     }
 
 }
