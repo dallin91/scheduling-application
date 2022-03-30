@@ -59,6 +59,7 @@ public class Reports {
 
         populateAppointmentTableView();
         populateMonthCombo();
+        populateTypeCombo();
 
         System.out.println("Hello there");
 
@@ -91,6 +92,20 @@ public class Reports {
 
         apptMonthCombo.setItems(allMonths);
 
+    }
+
+    public void populateTypeCombo() {
+        ObservableList<Appointment> appointmentList = DBAppointments.getAllAppointments();
+        ObservableList<String> allTypes = FXCollections.observableArrayList();
+
+        for (Appointment a : appointmentList) {
+            if (!allTypes.contains(a.getType())) {
+                String type = a.getType();
+                allTypes.add(type);
+            }
+        }
+
+        apptTypeCombo.setItems(allTypes);
     }
 
 }
