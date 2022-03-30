@@ -1,6 +1,7 @@
 package controller;
 
 import DBAccess.DBAppointments;
+import DBAccess.DBContacts;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -11,6 +12,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import model.Appointment;
+import model.Contact;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -60,8 +62,7 @@ public class Reports {
         populateAppointmentTableView();
         populateMonthCombo();
         populateTypeCombo();
-
-        System.out.println("Hello there");
+        populateContactCombo();
 
 
         apptID.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
@@ -107,5 +108,19 @@ public class Reports {
 
         apptTypeCombo.setItems(allTypes);
     }
+
+    public void populateContactCombo() {
+
+        ObservableList<Contact> allContacts = DBContacts.getAllContacts();
+        ObservableList<Integer> allContactIDs = FXCollections.observableArrayList();
+
+        for (Contact c : allContacts) {
+            int contactID = c.getContactID();
+            allContactIDs.add(contactID);
+        }
+
+        contactIDCombo.setItems(allContactIDs);
+    }
+
 
 }
