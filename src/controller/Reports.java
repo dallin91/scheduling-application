@@ -2,6 +2,7 @@ package controller;
 
 import DBAccess.DBAppointments;
 import DBAccess.DBContacts;
+import DBAccess.DBCountries;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -13,6 +14,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import model.Appointment;
 import model.Contact;
+import model.Country;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -63,6 +65,7 @@ public class Reports {
         populateMonthCombo();
         populateTypeCombo();
         populateContactCombo();
+        populateCountryCombo();
 
 
         apptID.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
@@ -122,5 +125,16 @@ public class Reports {
         contactIDCombo.setItems(allContactIDs);
     }
 
+    public void populateCountryCombo() {
+        ObservableList<Country> countryList = DBCountries.getAllCountries();
+        ObservableList<String> allCountryNames = FXCollections.observableArrayList();
+
+        for (Country c : countryList) {
+            String name = c.getCountryName();
+            allCountryNames.add(name);
+        }
+
+        countryCombo.setItems(allCountryNames);
+    }
 
 }
