@@ -80,12 +80,16 @@ public class Reports {
 
     public void populateMonthCombo() {
         ObservableList<Appointment> allAppointments = DBAppointments.getAllAppointments();
-        ObservableList<Month> allMonths = FXCollections.observableArrayList();
+        ObservableList<String> allMonths = FXCollections.observableArrayList();
 
         for (Appointment a : allAppointments) {
-            Month month = a.getStartTime().getMonth();
-            allMonths.add(month);
+            if (!allMonths.contains(String.valueOf(a.getStartTime().getMonth()))) {
+                String month = String.valueOf(a.getStartTime().getMonth());
+                allMonths.add(month);
+            }
         }
+
+        apptMonthCombo.setItems(allMonths);
 
     }
 
