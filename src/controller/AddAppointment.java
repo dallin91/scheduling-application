@@ -31,6 +31,11 @@ import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
+/**
+ * This class is the controller for AddAppointment.fxml
+ *
+ * @author Dallin Reeves
+ * */
 public class AddAppointment implements Initializable {
 
     @FXML
@@ -58,6 +63,12 @@ public class AddAppointment implements Initializable {
     @FXML
     private ComboBox<String> apptEndTime;
 
+    /**
+     * Initializes the form.
+     *
+     * @param resourceBundle
+     * @param url
+     * */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -92,6 +103,11 @@ public class AddAppointment implements Initializable {
         apptEndTime.setItems(apptTimes);
     }
 
+    /**
+     * This will save what is in the fields as a new appointment and return to the main scheduling page.
+     *
+     * @param actionEvent
+     * */
     public void toSchedulingSave(ActionEvent actionEvent) throws IOException, SQLException {
         addAppointment();
 
@@ -103,6 +119,10 @@ public class AddAppointment implements Initializable {
         stage.show();
     }
 
+    /**
+     * This will add the appointment to the database as well as conduct validation checks to make sure it is a valid appointment.
+     *
+     * */
     public void addAppointment() throws SQLException {
         try {
             if (!apptTitle.getText().equals("") && !apptDescription.getText().equals("") && !apptLocation.getText().equals("")
@@ -110,7 +130,7 @@ public class AddAppointment implements Initializable {
                     && !custID.getValue().equals("") && !userID.getValue().equals("") && !contactID.getValue().equals("")
                     && !apptStartTime.getValue().equals("") && !apptEndTime.getValue().equals("")) {
 
-                System.out.println("Bing bong you can add an appointment");
+
 
                 String newTitle = apptTitle.getText();
                 String newDescription = apptDescription.getText();
@@ -238,6 +258,11 @@ public class AddAppointment implements Initializable {
         }
     }
 
+    /**
+     * This will return to the scheduling page without saving any info
+     *
+     * @param actionEvent
+     * */
     public void toSchedulingCancel(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/view/SchedulingPage.fxml"));
         Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();
