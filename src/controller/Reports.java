@@ -66,8 +66,6 @@ public class Reports {
         apptID.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
         apptTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
         apptDesc.setCellValueFactory(new PropertyValueFactory<>("description"));
-        apptLoc.setCellValueFactory(new PropertyValueFactory<>("location"));
-        apptContact.setCellValueFactory(new PropertyValueFactory<>("contactId"));
         apptType.setCellValueFactory(new PropertyValueFactory<>("type"));
         apptStart.setCellValueFactory(new PropertyValueFactory<>("startTime"));
         apptEnd.setCellValueFactory(new PropertyValueFactory<>("endTime"));
