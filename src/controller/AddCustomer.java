@@ -27,6 +27,11 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 
+/**
+ * This class is the controller for AddCustomer.fxml
+ *
+ * @author Dallin Reeves
+ * */
 public class AddCustomer {
     @FXML
     private TextField custName;
@@ -42,6 +47,9 @@ public class AddCustomer {
     private ComboBox<String> custCountry;
 
 
+    /**
+     * This initializes the form
+     * */
     public void initialize() throws SQLException{
 
         setCustCountry();
@@ -49,8 +57,13 @@ public class AddCustomer {
 
     }
 
+    /**
+     * This will save the information in the fields as a new customer and return to the scheduling page
+     *
+     * @param actionEvent
+     * */
     public void toSchedulingSave(ActionEvent actionEvent) throws IOException, SQLException {
-        System.out.println("Ya still gotta do this part you doofus");
+
 
         addCustomer();
 
@@ -63,6 +76,9 @@ public class AddCustomer {
 
     }
 
+    /**
+     * This will add the customer information to the database as well as conduct validation checks.
+     * */
     public void addCustomer() throws SQLException {
 
         try {
@@ -115,6 +131,9 @@ public class AddCustomer {
         }
     }
 
+    /**
+     * This will set the items for the country combo box
+     * */
     public void setCustCountry() throws SQLException {
 
         ObservableList<Country> countryList = DBCountries.getAllCountries();
@@ -128,6 +147,9 @@ public class AddCustomer {
     }
 
 
+    /**
+     * This will set the items for the state combo box
+     * */
     public void setCustState() throws SQLException {
 
         ObservableList<FirstLevelDivision> divisionList = DBFirstLevelDivision.getFirstLevelDivisions();
@@ -140,6 +162,9 @@ public class AddCustomer {
         custState.setItems(divisionNames);
     }
 
+    /**
+     * This filters the state combo box so it only shows states/provinces for the country selected
+     * */
     public void filterCustState() throws SQLException {
         ObservableList<FirstLevelDivision> divisionList = DBFirstLevelDivision.getFirstLevelDivisions();
         ObservableList<String> divisionNamesToSet = FXCollections.observableArrayList();
@@ -165,6 +190,9 @@ public class AddCustomer {
         custState.setItems(divisionNamesToSet);
     }
 
+    /**
+     * Returns to the scheduling page without saving
+     * */
     public void toSchedulingCancel(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/view/SchedulingPage.fxml"));
         Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();
