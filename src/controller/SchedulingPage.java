@@ -30,6 +30,11 @@ import java.util.Optional;
 
 import static java.time.LocalDate.now;
 
+/**
+ * This is the controller for SchedulingPage.fxml
+ *
+ * @author Dallin Reeves
+ * */
 public class SchedulingPage {
     @FXML
     private Button addCustBtn;
@@ -83,9 +88,11 @@ public class SchedulingPage {
     private static Appointment appointmentToUpdate;
 
 
+    /**
+     * Initializes the form and sets up the customer and appointment table views
+     * */
     public void initialize() throws SQLException {
 
-        System.out.println("Yippee it worked!");
 
         //populate customer table
         populateCustomerTableView();
@@ -113,16 +120,25 @@ public class SchedulingPage {
 
     }
 
+    /**
+     * Populates the customer tableview with every customer in the database
+     * */
     public void populateCustomerTableView() throws SQLException {
         ObservableList<Customer> customerList = DBCustomers.getAllCustomers();
         customerTable.setItems(customerList);
     }
 
+    /**
+     * Populates the appointment tableview with every appointment in the database
+     * */
     public void populateAppointmentTableView() throws SQLException {
         ObservableList<Appointment> appointmentList = DBAppointments.getAllAppointments();
         appointmentTable.setItems(appointmentList);
     }
 
+    /**
+     * Sets the appointment tableview to only show appointments within the next week
+     * */
     public void appointmentWeekView() throws SQLException {
 
         ObservableList<Appointment> weekAppointments = DBAppointments.getWeekAppointments();
@@ -131,18 +147,29 @@ public class SchedulingPage {
 
     }
 
+    /**
+     * Sets the appointment tableview to only show appointments within the next month
+     * */
     public void appointmentMonthView() throws SQLException {
         ObservableList<Appointment> monthAppointments = DBAppointments.getMonthAppointments();
         appointmentTable.setItems(monthAppointments);
         appointmentTable.refresh();
     }
 
+    /**
+     * Sets the appointment tableview to show all appointments
+     * */
     public void appointmentAllView() throws SQLException {
         ObservableList<Appointment> allAppointments = DBAppointments.getAllAppointments();
         appointmentTable.setItems(allAppointments);
         appointmentTable.refresh();
     }
 
+    /**
+     * Takes the selected appointment and goes to the update appointment page
+     *
+     * @param actionEvent
+     * */
     public void toUpdateAppointment(ActionEvent actionEvent) throws IOException {
         appointmentToUpdate = appointmentTable.getSelectionModel().getSelectedItem();
 
@@ -162,10 +189,18 @@ public class SchedulingPage {
         }
     }
 
+    /**
+     * Returns the appointment to update
+     * */
     public static Appointment getAppointmentToUpdate() {
         return appointmentToUpdate;
     }
 
+    /**
+     * Takes the selected customer and goes to the update customer page
+     *
+     * @param actionEvent
+     * */
     public void toUpdateCustomer(ActionEvent actionEvent) throws IOException {
         customerToUpdate = customerTable.getSelectionModel().getSelectedItem();
 
@@ -185,10 +220,18 @@ public class SchedulingPage {
         }
     }
 
+    /**
+     * Returns the customer to update
+     * */
     public static Customer getCustomerToUpdate() {
         return customerToUpdate;
     }
 
+    /**
+     * Changes scene to the add customer page
+     *
+     * @param actionEvent
+     * */
     public void toAddCustomer(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/view/AddCustomer.fxml"));
         Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();
@@ -198,6 +241,11 @@ public class SchedulingPage {
         stage.show();
     }
 
+    /**
+     * Changes scene to the add appointment page
+     *
+     * @param actionEvent
+     * */
     public void toAddAppointment(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/view/AddAppointment.fxml"));
         Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();
@@ -207,6 +255,11 @@ public class SchedulingPage {
         stage.show();
     }
 
+    /**
+     * Deletes the selected appointment from the tableview and database
+     *
+     * @param event
+     * */
     public void deleteAppt(ActionEvent event) throws SQLException {
         Appointment selectedAppointment = appointmentTable.getSelectionModel().getSelectedItem();
         int selectedID = selectedAppointment.getAppointmentId();
@@ -244,6 +297,11 @@ public class SchedulingPage {
         }
     }
 
+    /**
+     * Deletes the selected customer from tableview and database. Checks that customer has no appointments scheduled first
+     *
+     * @param event
+     * */
     public void deleteCustomer(ActionEvent event) throws SQLException {
         Customer selectedCustomer = customerTable.getSelectionModel().getSelectedItem();
         int custIDToDelete = selectedCustomer.getId();
@@ -299,6 +357,11 @@ public class SchedulingPage {
         }
     }
 
+    /**
+     * Changes scene to the reports page
+     *
+     * @param actionEvent
+     * */
     public void toReports(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/view/Reports.fxml"));
         Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();
@@ -308,6 +371,9 @@ public class SchedulingPage {
         stage.show();
     }
 
+    /**
+     * Exits the program
+     * */
     public void exitButtonAction(ActionEvent actionEvent) {
         Stage stage = (Stage) exitButton.getScene().getWindow();
         stage.close();
