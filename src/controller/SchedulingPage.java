@@ -296,4 +296,10 @@ public class SchedulingPage {
             }
         }
     }
+
+    public void toReports(ActionEvent actionEvent) throws IOException {
+        System.out.println("ok this should work");
+    }
+
+
 }

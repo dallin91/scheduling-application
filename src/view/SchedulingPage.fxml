@@ -65,5 +65,7 @@
       </RadioButton>
       <RadioButton fx:id="monthBtn" layoutX="604.0" layoutY="326.0" mnemonicParsing="false" onAction="#appointmentMonthView" text="Month" toggleGroup="$appointmentViewToggle" />
       <RadioButton fx:id="allBtn" layoutX="553.0" layoutY="326.0" mnemonicParsing="false" onAction="#appointmentAllView" selected="true" text="All" toggleGroup="$appointmentViewToggle" />
+      <Button layoutX="14.0" layoutY="639.0" mnemonicParsing="false" onAction="#toReports" text="Reports" />
+      <Button layoutX="86.0" layoutY="639.0" mnemonicParsing="false" text="Exit" />
    </children>
 </AnchorPane>
