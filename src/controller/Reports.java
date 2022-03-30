@@ -1,8 +1,6 @@
 package controller;
 
-import DBAccess.DBAppointments;
-import DBAccess.DBContacts;
-import DBAccess.DBCountries;
+import DBAccess.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -12,9 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import model.Appointment;
-import model.Contact;
-import model.Country;
+import model.*;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -167,6 +163,40 @@ public class Reports {
 
         appointmentsTable.setItems(contactAppointments);
         appointmentsTable.refresh();
+
+    }
+
+    public void countryTotal() throws SQLException {
+
+        ObservableList<Country> allCountries = DBCountries.getAllCountries();
+        ObservableList<Customer> allCustomers = DBCustomers.getAllCustomers();
+        ObservableList<FirstLevelDivision> allDivisions = DBFirstLevelDivision.getFirstLevelDivisions();
+        String countryName = countryCombo.getValue();
+        int countryID = 0;
+        int divisionID = 0;
+        int total = 0;
+
+        for (Country c : allCountries) {
+            if (c.getCountryName().equals(countryName)) {
+                countryID = c.getCountryID();
+            }
+            for (FirstLevelDivision d : allDivisions) {
+                if (d.getCountryID() == countryID) {
+                    divisionID = d.getDivisionID();
+                }
+                for (Customer customer : allCustomers) {
+                    if (customer.getDivisionID() == divisionID) {
+                        total = total + 1;
+                    }
+                }
+            }
+
+        }
+
+
+        totalCustLabel.setText(String.valueOf(total));
+
+
 
     }
 
