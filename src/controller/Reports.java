@@ -137,4 +137,20 @@ public class Reports {
         countryCombo.setItems(allCountryNames);
     }
 
+    public void customerMonthClick() {
+
+        ObservableList<Appointment> allAppointments = DBAppointments.getAllAppointments();
+        String month = apptMonthCombo.getValue();
+        String type = apptTypeCombo.getValue();
+        int total = 0;
+
+        for (Appointment a : allAppointments) {
+            if (String.valueOf(a.getStartTime().getMonth()).equals(month) && a.getType().equals(type)) {
+                total = total + 1;
+            }
+        }
+
+        totalApptsLabel.setText(String.valueOf(total));
+    }
+
 }
