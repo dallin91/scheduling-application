@@ -11,8 +11,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 
+/**
+ * This class is the way to access the appointments table in the database
+ *
+ * @author Dallin Reeves
+ * */
 public class DBAppointments {
 
+    /**
+     * Returns all appointments
+     * */
     public static ObservableList<Appointment> getAllAppointments() {
         ObservableList<Appointment> appointmentsList = FXCollections.observableArrayList();
 
@@ -44,6 +52,9 @@ public class DBAppointments {
         return appointmentsList;
     }
 
+    /**
+     * Returns all appointments that are scheduled to start in the next week
+     * */
     public static ObservableList<Appointment> getWeekAppointments() throws SQLException {
         ObservableList<Appointment> appointmentObservableList = FXCollections.observableArrayList();
 
@@ -85,6 +96,9 @@ public class DBAppointments {
         return appointmentObservableList;
     }
 
+    /**
+     * Returns all appointments that are scheduled to start in the next month
+     * */
     public static ObservableList<Appointment> getMonthAppointments() throws SQLException {
         ObservableList<Appointment> appointmentObservableList = FXCollections.observableArrayList();
 
