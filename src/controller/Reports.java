@@ -59,9 +59,22 @@ public class Reports {
 
         populateAppointmentTableView();
         populateMonthCombo();
-        populateTypeCombo();
-        populateContactCombo();
         populateCountryCombo();
+
+        ObservableList<Contact> allContacts = DBContacts.getAllContacts();
+        ObservableList<Integer> contactIDs = FXCollections.observableArrayList();
+
+        //first lambda expression
+        allContacts.forEach(contact -> contactIDs.add(contact.getContactID()));
+        contactIDCombo.setItems(contactIDs);
+
+        ObservableList<Appointment> allAppointments = DBAppointments.getAllAppointments();
+        ObservableList<String> allTypes = FXCollections.observableArrayList();
+
+        //second lambda expression
+        allAppointments.forEach(appointment -> allTypes.add(appointment.getType()));
+        apptTypeCombo.setItems(allTypes);
+
 
 
         apptID.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
@@ -106,19 +119,6 @@ public class Reports {
         }
 
         apptTypeCombo.setItems(allTypes);
-    }
-
-    public void populateContactCombo() {
-
-        ObservableList<Contact> allContacts = DBContacts.getAllContacts();
-        ObservableList<Integer> allContactIDs = FXCollections.observableArrayList();
-
-        for (Contact c : allContacts) {
-            int contactID = c.getContactID();
-            allContactIDs.add(contactID);
-        }
-
-        contactIDCombo.setItems(allContactIDs);
     }
 
     public void populateCountryCombo() {
