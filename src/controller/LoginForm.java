@@ -63,7 +63,6 @@ public class LoginForm implements Initializable {
         String user = idField.getText();
         String password = passwordField.getText();
         ObservableList<User> allUsers = DBUsers.getAllUsers();
-        boolean validUser = false;
 
         for (User u : allUsers) {
             if (u.getUserName().equals(user) && u.getUserPassword().equals(password)) {
@@ -76,6 +75,7 @@ public class LoginForm implements Initializable {
             }
         }
 
+
         if(validUser) {
             Parent root = FXMLLoader.load(getClass().getResource("/view/SchedulingPage.fxml"));
             Stage stage = (Stage) ((Button)event.getSource()).getScene().getWindow();
@@ -83,6 +83,8 @@ public class LoginForm implements Initializable {
             stage.setTitle("Scheduling Page");
             stage.setScene(scene);
             stage.show();
+
+
         } else {
             Locale france = new Locale("fr", "FR");
 
@@ -102,6 +104,7 @@ public class LoginForm implements Initializable {
         }
 
         trackLoginAttempts();
+        System.out.println(validUser);
 
     }
 
@@ -157,9 +160,10 @@ public class LoginForm implements Initializable {
         FileWriter fw = new FileWriter("login_activity.txt", true);
         PrintWriter file = new PrintWriter(fw);
         if (validUser) {
-            file.println("User: " + user + " successfully logged in at " + date + timestamp);
-        } else {
-            file.println("User: " + user + " gave invalid login at " + date + timestamp);
+            file.println("User: " + user + " successfully logged in at " + date + " " + timestamp);
+        }
+        if (!validUser){
+            file.println("User: " + user + " gave invalid login at " + date + " " + timestamp);
         }
 
         file.close();
