@@ -30,6 +30,11 @@ import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
+/**
+ * This class is the controller for UpdateAppointment.fxml
+ *
+ * @author Dallin Reeves
+ * */
 public class UpdateAppointment implements Initializable {
 
     @FXML
@@ -57,6 +62,12 @@ public class UpdateAppointment implements Initializable {
     @FXML
     private ComboBox<String> apptEndTime;
 
+    /**
+     * Initializes the form along with filling the fields and combo boxes with the information from the selected appointment
+     *
+     * @param resourceBundle
+     * @param url
+     * */
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         //populate Contact combo box
@@ -118,6 +129,10 @@ public class UpdateAppointment implements Initializable {
 
     }
 
+    /**
+     * This takes the information entered into the fields and updates it in the database along with doing
+     * validation to make sure the appointment falls within acceptable times
+     * */
     public void updateAppointment() throws SQLException {
         try {
             if (!apptTitle.getText().equals("") && !apptDescription.getText().equals("") && !apptLocation.getText().equals("")
@@ -250,6 +265,11 @@ public class UpdateAppointment implements Initializable {
         }
     }
 
+    /**
+     * Returns to the scheduling page and saves the updated information
+     *
+     * @param actionEvent
+     * */
     public void toSchedulingSave(ActionEvent actionEvent) throws IOException, SQLException {
         updateAppointment();
 
@@ -261,6 +281,11 @@ public class UpdateAppointment implements Initializable {
         stage.show();
     }
 
+    /**
+     * Returns to the scheduling page without saving
+     *
+     * @param actionEvent
+     * */
     public void toSchedulingCancel(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/view/SchedulingPage.fxml"));
         Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();
