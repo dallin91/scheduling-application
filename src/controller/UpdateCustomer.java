@@ -26,6 +26,11 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
+/**
+ * This class is the controller for UpdateCustomer.fxml
+ *
+ * @author Dallin Reeves
+ * */
 public class UpdateCustomer {
     @FXML
     private TextField custID;
@@ -42,6 +47,9 @@ public class UpdateCustomer {
     @FXML
     private ComboBox<String> custCountry;
 
+    /**
+     * Initializes the form and prepopulates the fields and combo boxes with information from the selected customer
+     * */
     public void initialize() throws SQLException {
 
         setCustCountry();
@@ -77,6 +85,9 @@ public class UpdateCustomer {
         custState.setValue(state);
     }
 
+    /**
+     * This will save the updated customer information to the database and performs basic validation
+     * */
     public void updateCustomer() throws SQLException {
 
         try {
@@ -126,8 +137,12 @@ public class UpdateCustomer {
         }
     }
 
+    /**
+     * Returns to the scheduling page and saves the updated customer information
+     *
+     * @param actionEvent
+     * */
     public void toSchedulingSave(ActionEvent actionEvent) throws IOException, SQLException {
-        System.out.println("Ya still gotta do this part you doofus");
 
         updateCustomer();
 
@@ -140,6 +155,11 @@ public class UpdateCustomer {
 
     }
 
+    /**
+     * Returns to the scheduling page without saving
+     *
+     * @param actionEvent
+     * */
     public void toSchedulingCancel(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/view/SchedulingPage.fxml"));
         Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();
@@ -149,6 +169,9 @@ public class UpdateCustomer {
         stage.show();
     }
 
+    /**
+     * This populates the country combo box with all countries
+     * */
     public void setCustCountry() throws SQLException {
 
         ObservableList<Country> countryList = DBCountries.getAllCountries();
@@ -161,6 +184,9 @@ public class UpdateCustomer {
         custCountry.setItems(countryNames);
     }
 
+    /**
+     * This populates the state combo box with all first level divisions
+     * */
     public void setCustState() throws SQLException {
 
         ObservableList<FirstLevelDivision> divisionList = DBFirstLevelDivision.getFirstLevelDivisions();
@@ -173,6 +199,9 @@ public class UpdateCustomer {
         custState.setItems(divisionNames);
     }
 
+    /**
+     * This filters the state combo box based on which country is selected in the country combo box
+     * */
     public void filterCustState() throws SQLException {
         ObservableList<FirstLevelDivision> divisionList = DBFirstLevelDivision.getFirstLevelDivisions();
         ObservableList<String> divisionNamesToSet = FXCollections.observableArrayList();
