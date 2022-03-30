@@ -18,6 +18,11 @@ import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.ResourceBundle;
 
+/**
+ * This is the controller for Reports.fxml
+ *
+ * @author Dallin Reeves
+ * */
 public class Reports {
 
     @FXML
@@ -54,6 +59,13 @@ public class Reports {
     private TableColumn<Appointment, Integer> apptCustID;
 
 
+    /**
+     * This initializes the form and sets up the tableview.
+     *
+     * This also contains two lambda expressions.
+     * The first lambda expression simplifies the code to set items for the contact combo box.
+     * The second lambda expression simplifies the code to set items for the appointment type combo box.
+     * */
     public void initialize() throws SQLException {
 
 
@@ -87,11 +99,17 @@ public class Reports {
 
     }
 
+    /**
+     * This will populate the appointment tableview with all appointments
+     * */
     public void populateAppointmentTableView() throws SQLException {
         ObservableList<Appointment> appointmentList = DBAppointments.getAllAppointments();
         appointmentsTable.setItems(appointmentList);
     }
 
+    /**
+     * This will populate the month combo box with each month that has at least one appointment scheduled
+     * */
     public void populateMonthCombo() {
         ObservableList<Appointment> allAppointments = DBAppointments.getAllAppointments();
         ObservableList<String> allMonths = FXCollections.observableArrayList();
@@ -107,20 +125,9 @@ public class Reports {
 
     }
 
-    public void populateTypeCombo() {
-        ObservableList<Appointment> appointmentList = DBAppointments.getAllAppointments();
-        ObservableList<String> allTypes = FXCollections.observableArrayList();
-
-        for (Appointment a : appointmentList) {
-            if (!allTypes.contains(a.getType())) {
-                String type = a.getType();
-                allTypes.add(type);
-            }
-        }
-
-        apptTypeCombo.setItems(allTypes);
-    }
-
+    /**
+     * This will populate the country combo box with all countries
+     * */
     public void populateCountryCombo() {
         ObservableList<Country> countryList = DBCountries.getAllCountries();
         ObservableList<String> allCountryNames = FXCollections.observableArrayList();
@@ -133,6 +140,10 @@ public class Reports {
         countryCombo.setItems(allCountryNames);
     }
 
+    /**
+     * This defines the action of clicking the "Generate Total" button. It takes the month and type selected and
+     * will display the total number of appointments that fit those criteria
+     * */
     public void customerMonthClick() {
 
         ObservableList<Appointment> allAppointments = DBAppointments.getAllAppointments();
@@ -149,6 +160,10 @@ public class Reports {
         totalApptsLabel.setText(String.valueOf(total));
     }
 
+    /**
+     * This defines the action of clicking the "Go" button. It will take the contact ID from the box and display
+     * only appointments for that contact in the tableview below.
+     * */
     public void appointmentContactView() {
 
         int contactID = contactIDCombo.getValue();
@@ -166,6 +181,9 @@ public class Reports {
 
     }
 
+    /**
+     * This will display the total number of customers for the country selected in the country combo box
+     * */
     public void countryTotal() throws SQLException {
 
         ObservableList<Country> allCountries = DBCountries.getAllCountries();
