@@ -153,4 +153,21 @@ public class Reports {
         totalApptsLabel.setText(String.valueOf(total));
     }
 
+    public void appointmentContactView() {
+
+        int contactID = contactIDCombo.getValue();
+        ObservableList<Appointment> allAppointments = DBAppointments.getAllAppointments();
+        ObservableList<Appointment> contactAppointments = FXCollections.observableArrayList();
+
+        for (Appointment a : allAppointments) {
+            if (a.getContactId() == contactID) {
+                contactAppointments.add(a);
+            }
+        }
+
+        appointmentsTable.setItems(contactAppointments);
+        appointmentsTable.refresh();
+
+    }
+
 }

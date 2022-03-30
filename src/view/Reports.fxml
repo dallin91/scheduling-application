@@ -36,7 +36,7 @@
       </TableView>
       <Label layoutX="30.0" layoutY="97.0" text="Contact ID" />
       <ComboBox fx:id="contactIDCombo" layoutX="117.0" layoutY="93.0" prefHeight="25.0" prefWidth="66.0" />
-      <Button layoutX="205.0" layoutY="93.0" mnemonicParsing="false" text="Go" />
+      <Button layoutX="205.0" layoutY="93.0" mnemonicParsing="false" onAction="#appointmentContactView" text="Go" />
       <Label layoutX="205.0" layoutY="240.0" text="Total Customers Per Country">
          <font>
             <Font name="System Bold" size="14.0" />
