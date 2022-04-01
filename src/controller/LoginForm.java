@@ -62,7 +62,7 @@ public class LoginForm implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle){
         zoneAndLanguage();
-        checkUpcomingAppointments();
+
     }
 
     /**
@@ -105,6 +105,8 @@ public class LoginForm implements Initializable {
             stage.setTitle("Scheduling Page");
             stage.setScene(scene);
             stage.show();
+
+            checkUpcomingAppointments();
 
 
         } else {
@@ -163,6 +165,7 @@ public class LoginForm implements Initializable {
         ObservableList<User> userObservableList = DBUsers.getAllUsers();
         String userName = idField.getText();
         int idToCheck = 0;
+        boolean appointmentSoon = false;
         for (User u : userObservableList) {
             if (u.getUserName().equals(userName)) {
                 idToCheck = u.getUserID();
@@ -171,13 +174,22 @@ public class LoginForm implements Initializable {
         }
 
         for (Appointment a : appointmentObservableList) {
-            if (a.getUserId() == idToCheck && a.getStartTime().isBefore(soon)) {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Appointment Soon");
-                alert.setContentText("Appointment scheduled within 15 minutes");
-                alert.showAndWait();
-                return;
+            if (a.getUserId() == idToCheck && (a.getStartTime().isBefore(soon) && a.getStartTime().isAfter(now))) {
+                appointmentSoon = true;
+                break;
             }
+        }
+
+        if (appointmentSoon) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Appointment Soon");
+            alert.setContentText("Appointment scheduled within 15 minutes");
+            alert.showAndWait();
+        } else {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("No Appointment Soon");
+            alert.setContentText("No appointment scheduled for next 15 minutes");
+            alert.showAndWait();
         }
     }
 
