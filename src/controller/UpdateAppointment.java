@@ -140,7 +140,6 @@ public class UpdateAppointment implements Initializable {
                     && !custID.getValue().equals("") && !userID.getValue().equals("") && !contactID.getValue().equals("")
                     && !apptStartTime.getValue().equals("") && !apptEndTime.getValue().equals("")) {
 
-                System.out.println("Bing bong you can add an appointment");
 
                 String newTitle = apptTitle.getText();
                 String newDescription = apptDescription.getText();
@@ -216,17 +215,19 @@ public class UpdateAppointment implements Initializable {
                     LocalDateTime startTimes = a.getStartTime();
                     LocalDateTime endTimes = a.getEndTime();
                     int customerIDs = a.getCustomerId();
+                    Appointment chosenAppointment = SchedulingPage.getAppointmentToUpdate();
+                    int appointmentID = chosenAppointment.getAppointmentId();
 
-                    if (newCustID == customerIDs && (newStart.isEqual(startTimes) || newStart.isAfter(startTimes)) &&
-                            (newStart.isEqual(endTimes) || newStart.isBefore(endTimes))) {
+                    if ((newCustID == customerIDs && (newStart.isEqual(startTimes) || newStart.isAfter(startTimes)) &&
+                            (newStart.isEqual(endTimes) || newStart.isBefore(endTimes))) && appointmentID != a.getAppointmentId()) {
                         Alert alert = new Alert(Alert.AlertType.ERROR);
                         alert.setTitle("Appointment Overlap");
                         alert.setContentText("Customer already has appointment scheduled during this time. Appointment not added.");
                         alert.showAndWait();
                         return;
                     }
-                    if (newCustID == customerIDs && (newEnd.isEqual(startTimes) || newEnd.isAfter(startTimes)) &&
-                            (newEnd.isEqual(endTimes) || newEnd.isBefore(endTimes))) {
+                    if ((newCustID == customerIDs && (newEnd.isEqual(startTimes) || newEnd.isAfter(startTimes)) &&
+                            (newEnd.isEqual(endTimes) || newEnd.isBefore(endTimes))) && appointmentID != a.getAppointmentId()) {
                         Alert alert = new Alert(Alert.AlertType.ERROR);
                         alert.setTitle("Appointment Overlap");
                         alert.setContentText("Customer already has appointment scheduled during this time. Appointment not added.");
