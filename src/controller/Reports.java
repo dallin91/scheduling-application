@@ -194,33 +194,40 @@ public class Reports {
         ObservableList<Country> allCountries = DBCountries.getAllCountries();
         ObservableList<Customer> allCustomers = DBCustomers.getAllCustomers();
         ObservableList<FirstLevelDivision> allDivisions = DBFirstLevelDivision.getFirstLevelDivisions();
+        ObservableList<Integer> divisionsPresent = FXCollections.observableArrayList();
+        ObservableList<Integer> countriesPresent = FXCollections.observableArrayList();
+        ObservableList<String> countryNamesPresent = FXCollections.observableArrayList();
         String countryName = countryCombo.getValue();
         int countryID = 0;
         int divisionID = 0;
         int total = 0;
 
+        //adds each division ID to list
+        for (Customer customer : allCustomers) {
+            divisionsPresent.add(customer.getDivisionID());
+        }
+        //associates each division with its country
+        for (FirstLevelDivision d : allDivisions) {
+            if (divisionsPresent.contains(d.getDivisionID())) {
+                countriesPresent.add(d.getCountryID());
+            }
+        }
+        //associates each country name
+        for (Country country : allCountries) {
+            countryNamesPresent.add(country.getCountryName());
+        }
+
         for (Country c : allCountries) {
             if (c.getCountryName().equals(countryName)) {
-                countryID = c.getCountryID();
-            }
-            for (FirstLevelDivision d : allDivisions) {
-                if (d.getCountryID() == countryID) {
-                    divisionID = d.getDivisionID();
-                }
-                for (Customer customer : allCustomers) {
-                    if (customer.getDivisionID() == divisionID) {
+                for (Integer p : countriesPresent) {
+                    if (p == c.getCountryID()) {
                         total = total + 1;
                     }
                 }
             }
-
         }
 
-
         totalCustLabel.setText(String.valueOf(total));
-
-
-
     }
 
     /**
