@@ -25,6 +25,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.ZoneId;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -164,6 +165,9 @@ public class LoginForm implements Initializable {
         ObservableList<Appointment> appointmentObservableList = DBAppointments.getAllAppointments();
         ObservableList<User> userObservableList = DBUsers.getAllUsers();
         String userName = idField.getText();
+        int appointmentID = 0;
+        LocalDate appointmentDate = null;
+        LocalTime appointmentTime = null;
         int idToCheck = 0;
         boolean appointmentSoon = false;
         for (User u : userObservableList) {
@@ -176,6 +180,9 @@ public class LoginForm implements Initializable {
         for (Appointment a : appointmentObservableList) {
             if (a.getUserId() == idToCheck && (a.getStartTime().isBefore(soon) && a.getStartTime().isAfter(now))) {
                 appointmentSoon = true;
+                appointmentID = a.getAppointmentId();
+                appointmentDate = LocalDate.from(a.getStartTime());
+                appointmentTime = LocalTime.from(a.getStartTime());
                 break;
             }
         }
@@ -183,7 +190,8 @@ public class LoginForm implements Initializable {
         if (appointmentSoon) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Appointment Soon");
-            alert.setContentText("Appointment scheduled within 15 minutes");
+            alert.setContentText("Appointment scheduled within 15 minutes.\nID: " + appointmentID + "\nDate: " +
+                    appointmentDate + "\nTime: " + appointmentTime);
             alert.showAndWait();
         } else {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
